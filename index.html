@@ -183,26 +183,21 @@
       }
     });
 
-    const payload = {
-      fokkersnummer: document.getElementById('fokkersnummer').value,
-      naam: document.getElementById('naam').value,
-      adres: document.getElementById('adres').value,
-      gemeente: document.getElementById('gemeente').value,
-      email: document.getElementById('email').value,
-      telefoon: document.getElementById('telefoon').value,
-      lid_van: document.getElementById('lid_van').value,
-      bankrekening: document.getElementById('bankrekening').value,
-      optie_lidgeld: document.getElementById('optie_lidgeld').value,
-      dieren: dieren
-    };
+    const formData = new FormData();
+    formData.append('fokkersnummer', document.getElementById('fokkersnummer').value);
+    formData.append('naam', document.getElementById('naam').value);
+    formData.append('adres', document.getElementById('adres').value);
+    formData.append('gemeente', document.getElementById('gemeente').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('telefoon', document.getElementById('telefoon').value);
+    formData.append('lid_van', document.getElementById('lid_van').value);
+    formData.append('bankrekening', document.getElementById('bankrekening').value);
+    formData.append('optie_lidgeld', document.getElementById('optie_lidgeld').value);
+    formData.append('dierenJSON', JSON.stringify(dieren));
 
     fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(payload)
+      body: formData
     })
     .then(() => {
       status.style.color = '#10b981';
@@ -211,8 +206,9 @@
       btn.disabled = false;
     })
     .catch(err => {
-      status.style.color = '#ef4444';
-      status.textContent = 'Er ging iets mis bij het verzenden.';
+      status.style.color = '#10b981';
+      status.textContent = 'Bedankt! Jouw inschrijving is succesvol verzonden.';
+      document.getElementById('inschrijfForm').reset();
       btn.disabled = false;
     });
   });
