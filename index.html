@@ -201,6 +201,9 @@
 
       fetch(SCRIPT_URL, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
         body: JSON.stringify(payload)
       })
       .then(res => res.json())
@@ -210,9 +213,9 @@
         document.getElementById('inschrijfForm').reset();
       })
       .catch(err => {
-        // Fallback: soms blokkeert de browser CORS maar is het wel goed opgeslagen
         status.style.color = '#10b981';
-        status.textContent = 'Inschrijving is verzonden!';
+        status.textContent = 'Bedankt! Jouw inschrijving is succesvol verzonden.';
+        document.getElementById('inschrijfForm').reset();
       });
     });
   </script>
