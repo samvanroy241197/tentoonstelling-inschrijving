@@ -137,87 +137,82 @@
     </form>
   </div>
 
-  <script>
-    // PLAK HIERONDER JOUW GOOGLE APPS SCRIPT WEB-APP URL:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
+<script>
+  // PLAK HIER JOUW APPS SCRIPT URL:
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
-    function voegDierRijToe() {
-      const tbody = document.getElementById('dierenBody');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input type="text" class="dier-afk" style="width:45px;" placeholder="G"></td>
-        <td><input type="text" class="dier-ras" placeholder="Mechels Hoen"></td>
-        <td><input type="text" class="dier-kleur" placeholder="Koekoek"></td>
-        <td><input type="text" class="dier-jov" style="width:40px;" placeholder="1-0"></td>
-        <td><input type="text" class="dier-ring" placeholder="Ringnr"></td>
-        <td><input type="text" class="dier-prijs" style="width:60px;" placeholder="€"></td>
-        <td><button type="button" class="btn-del" onclick="this.closest('tr').remove()">X</button></td>
-      `;
-      tbody.appendChild(tr);
-    }
+  function voegDierRijToe() {
+    const tbody = document.getElementById('dierenBody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" class="dier-afk" style="width:45px;" placeholder="G"></td>
+      <td><input type="text" class="dier-ras" placeholder="Mechels Hoen"></td>
+      <td><input type="text" class="dier-kleur" placeholder="Koekoek"></td>
+      <td><input type="text" class="dier-jov" style="width:40px;" placeholder="1-0"></td>
+      <td><input type="text" class="dier-ring" placeholder="Ringnr"></td>
+      <td><input type="text" class="dier-prijs" style="width:60px;" placeholder="€"></td>
+      <td><button type="button" class="btn-del" onclick="this.closest('tr').remove()">X</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
 
-    // Start standaard met 3 lege rijen
-    voegDierRijToe();
-    voegDierRijToe();
-    voegDierRijToe();
+  voegDierRijToe();
+  voegDierRijToe();
+  voegDierRijToe();
 
-    document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const btn = document.getElementById('submitBtn');
-      const status = document.getElementById('statusMsg');
-      btn.disabled = true;
-      status.style.color = '#3b82f6';
-      status.textContent = 'Bezig met verzenden... even geduld.';
+  document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('statusMsg');
+    btn.disabled = true;
+    status.style.color = '#3b82f6';
+    status.textContent = 'Bezig met verzenden...';
 
-      // Verzamel dieren
-      const dieren = [];
-      document.querySelectorAll('#dierenBody tr').forEach(row => {
-        const ras = row.querySelector('.dier-ras').value.trim();
-        if (ras !== "") {
-          dieren.push({
-            afk: row.querySelector('.dier-afk').value,
-            ras: ras,
-            kleur: row.querySelector('.dier-kleur').value,
-            jov: row.querySelector('.dier-jov').value,
-            ring: row.querySelector('.dier-ring').value,
-            prijs: row.querySelector('.dier-prijs').value
-          });
-        }
-      });
-
-      const payload = {
-        fokkersnummer: document.getElementById('fokkersnummer').value,
-        naam: document.getElementById('naam').value,
-        adres: document.getElementById('adres').value,
-        gemeente: document.getElementById('gemeente').value,
-        email: document.getElementById('email').value,
-        telefoon: document.getElementById('telefoon').value,
-        lid_van: document.getElementById('lid_van').value,
-        bankrekening: document.getElementById('bankrekening').value,
-        optie_lidgeld: document.getElementById('optie_lidgeld').value,
-        dieren: dieren
-      };
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(response => {
-        status.style.color = '#10b981';
-        status.textContent = 'Bedankt! Jouw inschrijving is succesvol verzonden.';
-        document.getElementById('inschrijfForm').reset();
-      })
-      .catch(err => {
-        status.style.color = '#10b981';
-        status.textContent = 'Bedankt! Jouw inschrijving is succesvol verzonden.';
-        document.getElementById('inschrijfForm').reset();
-      });
+    const dieren = [];
+    document.querySelectorAll('#dierenBody tr').forEach(row => {
+      const ras = row.querySelector('.dier-ras').value.trim();
+      if (ras !== "") {
+        dieren.push({
+          afk: row.querySelector('.dier-afk').value,
+          ras: ras,
+          kleur: row.querySelector('.dier-kleur').value,
+          jov: row.querySelector('.dier-jov').value,
+          ring: row.querySelector('.dier-ring').value,
+          prijs: row.querySelector('.dier-prijs').value
+        });
+      }
     });
-  </script>
+
+    const formData = new URLSearchParams();
+    formData.append('fokkersnummer', document.getElementById('fokkersnummer').value);
+    formData.append('naam', document.getElementById('naam').value);
+    formData.append('adres', document.getElementById('adres').value);
+    formData.append('gemeente', document.getElementById('gemeente').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('telefoon', document.getElementById('telefoon').value);
+    formData.append('lid_van', document.getElementById('lid_van').value);
+    formData.append('bankrekening', document.getElementById('bankrekening').value);
+    formData.append('optie_lidgeld', document.getElementById('optie_lidgeld').value);
+    formData.append('dierenJSON', JSON.stringify(dieren));
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    })
+    .then(() => {
+      status.style.color = '#10b981';
+      status.textContent = 'Bedankt! Jouw inschrijving is succesvol verzonden.';
+      document.getElementById('inschrijfForm').reset();
+      btn.disabled = false;
+    })
+    .catch(err => {
+      status.style.color = '#ef4444';
+      status.textContent = 'Er ging iets mis bij het verzenden.';
+      btn.disabled = false;
+    });
+  });
+</script>
 </body>
 </html>
