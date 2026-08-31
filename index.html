@@ -8,6 +8,12 @@
     body { font-family: Arial, sans-serif; max-width: 1000px; margin: 20px auto; padding: 20px; background-color: #f4f6f8; color: #333; line-height: 1.5; }
     .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
     h1, h2, h3 { color: #1e3a8a; }
+    
+    /* Taalschakelaar */
+    .lang-container { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 15px; }
+    .lang-btn { padding: 6px 14px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px; color: #475569; }
+    .lang-btn.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+
     .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; margin-bottom: 20px; font-size: 0.95em; }
     .form-group { margin-bottom: 15px; }
     label { display: block; font-weight: bold; margin-bottom: 5px; }
@@ -26,21 +32,9 @@
     .total-box { background: #e0f2fe; border: 2px solid #0284c7; padding: 15px; border-radius: 6px; margin-top: 20px; font-size: 1.1em; }
     .total-box strong { font-size: 1.3em; color: #0369a1; }
     
-    /* Tandwiel Spinner Animatie */
-    .spinner {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 3px solid rgba(255,255,255,.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s ease-in-out infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Bevestigingsweergave */
     #bevestigingScherm { display: none; }
     .success-badge { background: #dcfce7; border-left: 4px solid #16a34a; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
     .bank-box { background: #fef9c3; border: 2px dashed #ca8a04; padding: 18px; border-radius: 6px; margin: 20px 0; }
@@ -53,116 +47,121 @@
 
   <!-- INSCHRIJFFORMULIER -->
   <div class="card" id="formulierScherm">
-    <h1>De Pajottenlanders vzw</h1>
-    <h3>Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
     
-    <div class="alert-info">
+    <!-- Taalkeuze Knoppen -->
+    <div class="lang-container">
+      <span style="font-size: 13px; color: #64748b; font-weight: bold;">Taal / Langue:</span>
+      <button type="button" class="lang-btn active" id="btnNL" onclick="wisselTaal('nl')">Nederlands</button>
+      <button type="button" class="lang-btn" id="btnFR" onclick="wisselTaal('fr')">Français</button>
+    </div>
+
+    <h1 id="txtTitel">De Pajottenlanders vzw</h1>
+    <h3 id="txtSubtitel">Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
+    
+    <div class="alert-info" id="txtAlert">
       <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong>!
     </div>
 
     <form id="inschrijfForm">
       
-      <h3>1. Persoonlijke Gegevens</h3>
+      <h3 id="txtSectie1">1. Persoonlijke Gegevens</h3>
       <div class="grid-2">
         <div class="form-group">
-          <label>Fokkersnummer:</label>
+          <label id="lblFokkersnr">Fokkersnummer:</label>
           <input type="text" id="fokkersnummer" required>
         </div>
         <div class="form-group">
-          <label>Naam & Voornaam:</label>
+          <label id="lblNaam">Naam & Voornaam:</label>
           <input type="text" id="naam" required>
         </div>
       </div>
 
       <div class="grid-2">
         <div class="form-group">
-          <label>Straat + Huisnummer:</label>
+          <label id="lblAdres">Straat + Huisnummer:</label>
           <input type="text" id="adres" required>
         </div>
         <div class="form-group">
-          <label>Postcode + Gemeente:</label>
+          <label id="lblGemeente">Postcode + Gemeente:</label>
           <input type="text" id="gemeente" required>
         </div>
       </div>
 
       <div class="grid-2">
         <div class="form-group">
-          <label>E-mailadres:</label>
+          <label id="lblEmail">E-mailadres:</label>
           <input type="email" id="email" required>
         </div>
         <div class="form-group">
-          <label>Telefoon / GSM:</label>
+          <label id="lblTelefoon">Telefoon / GSM:</label>
           <input type="tel" id="telefoon" required>
         </div>
       </div>
 
       <div class="grid-2">
         <div class="form-group">
-          <label>Lid van vereniging:</label>
+          <label id="lblLidVan">Lid van vereniging:</label>
           <input type="text" id="lid_van">
         </div>
         <div class="form-group">
-          <label>Bankrekeningnummer (IBAN):</label>
+          <label id="lblBankrekening">Bankrekeningnummer (IBAN):</label>
           <input type="text" id="bankrekening" required>
         </div>
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
-      <h3>2. Opties & Lidgelden</h3>
+      <h3 id="txtSectie2">2. Opties & Lidgelden</h3>
       <div class="form-group">
-        <label>Verplicht palmares:</label>
-        <input type="text" value="7,00 EUR (1 per gezin verplicht)" disabled>
+        <label id="lblPalmares">Verplicht palmares:</label>
+        <input type="text" id="valPalmares" value="7,00 EUR (1 per gezin verplicht)" disabled>
       </div>
       <div class="form-group">
-        <label>Lidgeld 2027 (keuze):</label>
+        <label id="lblLidgeld">Lidgeld 2027 (keuze):</label>
         <select id="optie_lidgeld" onchange="berekenTotaal()">
-          <option value="0" data-label="Geen lidgeld">Geen lidgeld (€0,00)</option>
-          <option value="15" data-label="Papieren clubblad (15 EUR)">Papieren clubblad (€15,00)</option>
-          <option value="10" data-label="Mail-lidgeld digitaal (10 EUR)">Mail-lidgeld digitaal clubblad (€10,00)</option>
-          <option value="3" data-label="Lidgeld 2de lid (3 EUR)">Lidgeld vanaf 2de lid in zelfde familie (€3,00)</option>
+          <!-- Opties worden via JavaScript gevuld -->
         </select>
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
-      <h3>3. Dieren Inschrijven (€5,00 per dier)</h3>
+      <h3 id="txtSectie3">3. Dieren Inschrijven (€5,00 per dier)</h3>
       
       <table id="dierenTabel">
         <thead>
           <tr>
-            <th style="width: 14%;">Diersoort *</th>
-            <th style="width: 20%;">Ras - Variëteit *</th>
-            <th style="width: 14%;">Kleur *</th>
-            <th style="width: 10%;">Oud / Jong *</th>
-            <th style="width: 10%;">Man / Vrouw *</th>
-            <th style="width: 12%;">Ring / Tatoe *</th>
-            <th style="width: 10%;">Verkoopprijs<span class="th-sub">leeglaten indien niet te koop</span></th>
-            <th style="width: 10%;">Aanduiding</th>
+            <th style="width: 15%;" id="thSoort">Diersoort *</th>
+            <th style="width: 20%;" id="thRas">Ras - Variëteit *</th>
+            <th style="width: 13%;" id="thKleur">Kleur *</th>
+            <th style="width: 10%;" id="thLeeftijd">Oud / Jong *</th>
+            <th style="width: 10%;" id="thGeslacht">Man / Vrouw *</th>
+            <th style="width: 12%;" id="thRing">Ring / Tatoe *</th>
+            <th style="width: 10%;"><span id="thPrijs">Verkoopprijs</span><span class="th-sub" id="thPrijsSub">leeglaten indien niet te koop</span></th>
+            <th style="width: 8%;" id="thAanduiding">Aanduiding</th>
             <th style="width: 2%;"></th>
           </tr>
         </thead>
         <tbody id="dierenBody">
-          <!-- Rijen via JavaScript -->
+          <!-- Rijen via JS -->
         </tbody>
       </table>
       
-      <button type="button" class="btn btn-secondary" onclick="voegDierRijToe()">+ Dier toevoegen</button>
+      <button type="button" class="btn btn-secondary" id="btnAddDier" onclick="voegDierRijToe()">+ Dier toevoegen</button>
 
       <div class="total-box">
-        <div>Aantal ingevulde dieren: <span id="aantalDierenTxt">0</span> (€<span id="kostenDierenTxt">0,00</span>)</div>
-        <div>Verplicht palmares: €7,00</div>
-        <div>Lidgeld: €<span id="kostenLidgeldTxt">0,00</span></div>
+        <div><span id="lblAantalDieren">Aantal ingevulde dieren</span>: <span id="aantalDierenTxt">0</span> (€<span id="kostenDierenTxt">0,00</span>)</div>
+        <div><span id="lblPalmaresKosten">Verplicht palmares</span>: €7,00</div>
+        <div><span id="lblLidgeldKosten">Lidgeld</span>: €<span id="kostenLidgeldTxt">0,00</span></div>
         <hr style="border:none; border-top:1px solid #cbd5e1; margin:8px 0;">
-        <div>Totaal te betalen: <strong>€<span id="totaalBedragTxt">7,00</span></strong></div>
+        <div><span id="lblTotaalTeBetalen">Totaal te betalen</span>: <strong>€<span id="totaalBedragTxt">7,00</span></strong></div>
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
-      <h3>4. Bevestiging</h3>
+      <h3 id="txtSectie4">4. Bevestiging</h3>
       <div class="form-group">
         <label>
-          <input type="checkbox" required> Ik ga akkoord met het reglement en geef toestemming voor verwerking van de gegevens.
+          <input type="checkbox" required> <span id="lblAkkoord">Ik ga akkoord met het reglement en geef toestemming voor verwerking van de gegevens.</span>
         </label>
       </div>
 
@@ -174,98 +173,357 @@
     </form>
   </div>
 
-  <!-- BEVESTIGINGSPAGINA (ZICHTBAAR NA VERZENDEN) -->
+  <!-- BEVESTIGINGSSCHERM -->
   <div class="card" id="bevestigingScherm">
     <div class="success-badge">
-      <h2 style="color: #15803d; margin-top: 0;">Inschrijving Succesvol Verzonden!</h2>
-      <p style="margin-bottom: 0;">Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.</p>
+      <h2 style="color: #15803d; margin-top: 0;" id="confTitel">Inschrijving Succesvol Verzonden!</h2>
+      <p style="margin-bottom: 0;" id="confSub">Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.</p>
     </div>
 
     <div class="bank-box">
-      <h3 style="margin-top: 0; color: #854d0e;">Belangrijke Betaalinstructies</h3>
-      <p>Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van <strong id="confTotaalBedrag" style="font-size: 1.2em; color:#854d0e;">€0,00</strong> vóór <strong>1 november</strong> over te schrijven naar</p>
+      <h3 style="margin-top: 0; color: #854d0e;" id="confBankTitel">Belangrijke Betaalinstructies</h3>
+      <p><span id="confBankTekst1">Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van</span> <strong id="confTotaalBedrag" style="font-size: 1.2em; color:#854d0e;">€0,00</strong> <span id="confBankTekst2">vóór <strong>1 november</strong> over te schrijven naar:</span></p>
       <ul style="list-style-type: none; padding-left: 0; font-size: 1.05em;">
-        <li><strong>Begunstigde:</strong> Kleinveevereniging De Pajottenlanders vzw</li>
-        <li><strong>Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858</li>
+        <li><strong id="lblBegunstigde">Begunstigde:</strong> Kleinveevereniging De Pajottenlanders vzw</li>
+        <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858</li>
         <li><strong>BIC:</strong> GEBABEBB</li>
-        <li><strong>Mededeling:</strong> Inschrijving TT 2026 - <span id="confNaamMededeling"></span></li>
+        <li><strong id="lblMededeling">Mededeling:</strong> <span id="confMededelingTekst">Inschrijving TT 2026 - </span><span id="confNaamMededeling"></span></li>
       </ul>
-      <p style="margin-bottom: 0; font-size: 0.95em; color: #713f12;"><em>Vergeet niet om ook een kopie van je inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong>!</em></p>
+      <p style="margin-bottom: 0; font-size: 0.95em; color: #713f12;"><em id="confInentingTekst">Vergeet niet om ook een kopie van je inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong>!</em></p>
     </div>
 
-    <h3>Overzicht van je Inschrijving</h3>
+    <h3 id="confOverzichtTitel">Overzicht van je Inschrijving</h3>
     <table class="summary-table">
-      <tr><td>Fokkersnummer</td><td id="confFokkersnr"></td></tr>
-      <tr><td>Naam & Voornaam</td><td id="confNaam"></td></tr>
-      <tr><td>Adres</td><td id="confAdres"></td></tr>
-      <tr><td>E-mail & Telefoon</td><td id="confContact"></td></tr>
-      <tr><td>Lid van</td><td id="confLidVan"></td></tr>
-      <tr><td>Bankrekening</td><td id="confIban"></td></tr>
-      <tr><td>Gekozen Lidgeld</td><td id="confLidgeld"></td></tr>
+      <tr><td id="rowFokkersnr">Fokkersnummer</td><td id="confFokkersnr"></td></tr>
+      <tr><td id="rowNaam">Naam & Voornaam</td><td id="confNaam"></td></tr>
+      <tr><td id="rowAdres">Adres</td><td id="confAdres"></td></tr>
+      <tr><td id="rowContact">E-mail & Telefoon</td><td id="confContact"></td></tr>
+      <tr><td id="rowLidVan">Lid van</td><td id="confLidVan"></td></tr>
+      <tr><td id="rowIban">Bankrekening</td><td id="confIban"></td></tr>
+      <tr><td id="rowLidgeld">Gekozen Lidgeld</td><td id="confLidgeld"></td></tr>
     </table>
 
-    <h4 style="margin-top: 20px;">Ingeschreven Dieren</h4>
+    <h4 style="margin-top: 20px;" id="confDierenTitel">Ingeschreven Dieren</h4>
     <table style="width: 100%; border-collapse: collapse;">
       <thead>
         <tr style="background: #f1f5f9;">
           <th style="border:1px solid #ddd; padding:6px;">#</th>
-          <th style="border:1px solid #ddd; padding:6px;">Diersoort</th>
-          <th style="border:1px solid #ddd; padding:6px;">Ras</th>
-          <th style="border:1px solid #ddd; padding:6px;">Kleur</th>
-          <th style="border:1px solid #ddd; padding:6px;">Leeftijd</th>
-          <th style="border:1px solid #ddd; padding:6px;">Geslacht</th>
-          <th style="border:1px solid #ddd; padding:6px;">Ring / Tatoe</th>
-          <th style="border:1px solid #ddd; padding:6px;">Prijs</th>
-          <th style="border:1px solid #ddd; padding:6px;">Aanduiding</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfSoort">Diersoort</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfRas">Ras</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfKleur">Kleur</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfLeeftijd">Leeftijd</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfGeslacht">Geslacht</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfRing">Ring / Tatoe</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfPrijs">Prijs</th>
+          <th style="border:1px solid #ddd; padding:6px;" id="thConfAanduiding">Aanduiding</th>
         </tr>
       </thead>
       <tbody id="confDierenBody"></tbody>
     </table>
 
-    <button type="button" class="btn btn-secondary" onclick="window.print()" style="margin-top: 25px;">Pagina afdrukken / Opslaan als PDF</button>
+    <button type="button" class="btn btn-secondary" onclick="window.print()" style="margin-top: 25px;" id="btnPrint">Pagina afdrukken / Opslaan als PDF</button>
   </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
+    let huidigeTaal = 'nl';
+
+    const vertalingen = {
+      nl: {
+        titel: "De Pajottenlanders vzw",
+        subtitel: "Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd",
+        alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong>!",
+        sec1: "1. Persoonlijke Gegevens",
+        fokkersnr: "Fokkersnummer:",
+        naam: "Naam & Voornaam:",
+        adres: "Straat + Huisnummer:",
+        gemeente: "Postcode + Gemeente:",
+        email: "E-mailadres:",
+        telefoon: "Telefoon / GSM:",
+        lidVan: "Lid van vereniging:",
+        bankrekening: "Bankrekeningnummer (IBAN):",
+        sec2: "2. Opties & Lidgelden",
+        palmares: "Verplicht palmares:",
+        palmaresVal: "7,00 EUR (1 per gezin verplicht)",
+        lidgeld: "Lidgeld 2027 (keuze):",
+        lidgeldOpties: [
+          { val: "0", label: "Geen lidgeld (€0,00)", sheet: "Geen lidgeld" },
+          { val: "15", label: "Papieren clubblad (€15,00)", sheet: "Papieren clubblad (15 EUR)" },
+          { val: "10", label: "Mail-lidgeld digitaal clubblad (€10,00)", sheet: "Mail-lidgeld digitaal (10 EUR)" },
+          { val: "3", label: "Lidgeld vanaf 2de lid in zelfde familie (€3,00)", sheet: "Lidgeld 2de lid (3 EUR)" }
+        ],
+        sec3: "3. Dieren Inschrijven (€5,00 per dier)",
+        thSoort: "Diersoort *",
+        thRas: "Ras - Variëteit *",
+        thKleur: "Kleur *",
+        thLeeftijd: "Oud / Jong *",
+        thGeslacht: "Man / Vrouw *",
+        thRing: "Ring / Tatoe *",
+        thPrijs: "Verkoopprijs",
+        thPrijsSub: "leeglaten indien niet te koop",
+        thAanduiding: "Aanduiding",
+        btnAddDier: "+ Dier toevoegen",
+        kies: "-- Kies --",
+        optioneel: "Optioneel",
+        soorten: [
+          { val: "Duiven", label: "Duiven" },
+          { val: "Grote hoenders", label: "Grote hoenders" },
+          { val: "Krielen", label: "Krielen" },
+          { val: "Konijnen", label: "Konijnen" },
+          { val: "Cavia's", label: "Cavia's" },
+          { val: "Parkvogels", label: "Parkvogels" },
+          { val: "Watervogels", label: "Watervogels" }
+        ],
+        leeftijden: [
+          { val: "Oud", label: "Oud" },
+          { val: "Jong", label: "Jong" }
+        ],
+        geslachten: [
+          { val: "Man", label: "Man" },
+          { val: "Vrouw", label: "Vrouw" }
+        ],
+        lblAantalDieren: "Aantal ingevulde dieren",
+        lblPalmaresKosten: "Verplicht palmares",
+        lblLidgeldKosten: "Lidgeld",
+        lblTotaalTeBetalen: "Totaal te betalen",
+        sec4: "4. Bevestiging",
+        akkoord: "Ik ga akkoord met het reglement en geef toestemming voor verwerking van de gegevens.",
+        btnText: "Inschrijving Verzenden",
+        btnSending: "Bezig met verzenden...",
+        valAlert: (idx) => `Gelieve bij dier #${idx} alle verplichte velden in te vullen (Diersoort, Ras, Kleur, Oud/Jong, Man/Vrouw, Ring/Tatoe).`,
+        // Bevestiging
+        confTitel: "Inschrijving Succesvol Verzonden!",
+        confSub: "Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.",
+        confBankTitel: "Belangrijke Betaalinstructies",
+        confBankTekst1: "Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van",
+        confBankTekst2: "vóór <strong>1 november</strong> over te schrijven naar:",
+        lblBegunstigde: "Begunstigde:",
+        lblRekening: "Rekeningnummer (IBAN):",
+        lblMededeling: "Mededeling:",
+        confMededelingTekst: "Inschrijving TT 2026 - ",
+        confInentingTekst: "Vergeet niet om ook een kopie van je inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong>!",
+        confOverzichtTitel: "Overzicht van je Inschrijving",
+        confDierenTitel: "Ingeschreven Dieren",
+        btnPrint: "Pagina afdrukken / Opslaan als PDF"
+      },
+      fr: {
+        titel: "De Pajottenlanders asbl",
+        subtitel: "Formulaire d'inscription 2026 - Exposition / Concours provincial",
+        alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient définitive qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas d'envoyer une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong>!",
+        sec1: "1. Coordonnées Personnelles",
+        fokkersnr: "Numéro d'éleveur:",
+        naam: "Nom & Prénom:",
+        adres: "Rue + Numéro:",
+        gemeente: "Code postal + Commune:",
+        email: "Adresse e-mail:",
+        telefoon: "Téléphone / GSM:",
+        lidVan: "Membre de l'association:",
+        bankrekening: "Numéro de compte (IBAN):",
+        sec2: "2. Options & Cotisations",
+        palmares: "Palmarès obligatoire:",
+        palmaresVal: "7,00 EUR (1 par famille obligatoire)",
+        lidgeld: "Cotisation 2027 (au choix):",
+        lidgeldOpties: [
+          { val: "0", label: "Pas de cotisation (€0,00)", sheet: "Geen lidgeld" },
+          { val: "15", label: "Revue du club papier (€15,00)", sheet: "Papieren clubblad (15 EUR)" },
+          { val: "10", label: "Cotisation mail / revue digitale (€10,00)", sheet: "Mail-lidgeld digitaal (10 EUR)" },
+          { val: "3", label: "Cotisation à partir du 2ème membre (€3,00)", sheet: "Lidgeld 2de lid (3 EUR)" }
+        ],
+        sec3: "3. Inscription des Animaux (€5,00 par animal)",
+        thSoort: "Espèce *",
+        thRas: "Race - Variété *",
+        thKleur: "Couleur *",
+        thLeeftijd: "Vieux / Jeune *",
+        thGeslacht: "Mâle / Femelle *",
+        thRing: "Bague / Tatouage *",
+        thPrijs: "Prix de vente",
+        thPrijsSub: "laisser vide si non à vendre",
+        thAanduiding: "Remarque",
+        btnAddDier: "+ Ajouter un animal",
+        kies: "-- Choisir --",
+        optioneel: "Optionnel",
+        soorten: [
+          { val: "Duiven", label: "Pigeons" },
+          { val: "Grote hoenders", label: "Grandes volailles" },
+          { val: "Krielen", label: "Volailles naines" },
+          { val: "Konijnen", label: "Lapins" },
+          { val: "Cavia's", label: "Cobayes" },
+          { val: "Parkvogels", label: "Oiseaux de parc" },
+          { val: "Watervogels", label: "Oiseaux aquatiques" }
+        ],
+        leeftijden: [
+          { val: "Oud", label: "Vieux" },
+          { val: "Jong", label: "Jeune" }
+        ],
+        geslachten: [
+          { val: "Man", label: "Mâle" },
+          { val: "Vrouw", label: "Femelle" }
+        ],
+        lblAantalDieren: "Nombre d'animaux inscrits",
+        lblPalmaresKosten: "Palmarès obligatoire",
+        lblLidgeldKosten: "Cotisation",
+        lblTotaalTeBetalen: "Total à payer",
+        sec4: "4. Confirmation",
+        akkoord: "J'accepte le règlement de l'exposition et autorise le traitement de mes données.",
+        btnText: "Envoyer l'inscription",
+        btnSending: "Envoi en cours...",
+        valAlert: (idx) => `Veuillez remplir tous les champs obligatoires pour l'animal #${idx} (Espèce, Race, Couleur, Vieux/Jeune, Mâle/Femelle, Bague).`,
+        // Bevestiging
+        confTitel: "Inscription Envoyée avec Succès!",
+        confSub: "Merci pour votre inscription. Nous avons bien reçu vos données.",
+        confBankTitel: "Instructions de Paiement Importantes",
+        confBankTekst1: "Pour finaliser définitivement votre inscription, veuillez virer le montant total exact de",
+        confBankTekst2: "avant le <strong>1er novembre</strong> sur le compte suivant:",
+        lblBegunstigde: "Bénéficiaire:",
+        lblRekening: "Numéro de compte (IBAN):",
+        lblMededeling: "Communication:",
+        confMededelingTekst: "Inscription Expo 2026 - ",
+        confInentingTekst: "N'oubliez pas d'envoyer également une copie de votre certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong>!",
+        confOverzichtTitel: "Récapitulatif de votre Inscription",
+        confDierenTitel: "Animaux Inscrits",
+        btnPrint: "Imprimer la page / Sauvegarder en PDF"
+      }
+    };
+
+    function wisselTaal(taal) {
+      huidigeTaal = taal;
+      const t = vertalingen[taal];
+
+      // Knoppen stijl
+      document.getElementById('btnNL').classList.toggle('active', taal === 'nl');
+      document.getElementById('btnFR').classList.toggle('active', taal === 'fr');
+
+      // Statische teksten formulier
+      document.getElementById('txtTitel').innerHTML = t.titel;
+      document.getElementById('txtSubtitel').innerHTML = t.subtitel;
+      document.getElementById('txtAlert').innerHTML = t.alert;
+      document.getElementById('txtSectie1').innerHTML = t.sec1;
+      document.getElementById('lblFokkersnr').innerHTML = t.fokkersnr;
+      document.getElementById('lblNaam').innerHTML = t.naam;
+      document.getElementById('lblAdres').innerHTML = t.adres;
+      document.getElementById('lblGemeente').innerHTML = t.gemeente;
+      document.getElementById('lblEmail').innerHTML = t.email;
+      document.getElementById('lblTelefoon').innerHTML = t.telefoon;
+      document.getElementById('lblLidVan').innerHTML = t.lidVan;
+      document.getElementById('lblBankrekening').innerHTML = t.bankrekening;
+
+      document.getElementById('txtSectie2').innerHTML = t.sec2;
+      document.getElementById('lblPalmares').innerHTML = t.palmares;
+      document.getElementById('valPalmares').value = t.palmaresVal;
+      document.getElementById('lblLidgeld').innerHTML = t.lidgeld;
+
+      // Lidgeld opties herbouwen met behoud van selectie
+      const lidgeldSelect = document.getElementById('optie_lidgeld');
+      const geselecteerdeIndex = lidgeldSelect.selectedIndex >= 0 ? lidgeldSelect.selectedIndex : 0;
+      lidgeldSelect.innerHTML = '';
+      t.lidgeldOpties.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.val;
+        o.textContent = opt.label;
+        o.setAttribute('data-sheet', opt.sheet);
+        lidgeldSelect.appendChild(o);
+      });
+      lidgeldSelect.selectedIndex = geselecteerdeIndex;
+
+      document.getElementById('txtSectie3').innerHTML = t.sec3;
+      document.getElementById('thSoort').innerHTML = t.thSoort;
+      document.getElementById('thRas').innerHTML = t.thRas;
+      document.getElementById('thKleur').innerHTML = t.thKleur;
+      document.getElementById('thLeeftijd').innerHTML = t.thLeeftijd;
+      document.getElementById('thGeslacht').innerHTML = t.thGeslacht;
+      document.getElementById('thRing').innerHTML = t.thRing;
+      document.getElementById('thPrijs').innerHTML = t.thPrijs;
+      document.getElementById('thPrijsSub').innerHTML = t.thPrijsSub;
+      document.getElementById('thAanduiding').innerHTML = t.thAanduiding;
+      document.getElementById('btnAddDier').innerHTML = t.btnAddDier;
+
+      document.getElementById('lblAantalDieren').innerHTML = t.lblAantalDieren;
+      document.getElementById('lblPalmaresKosten').innerHTML = t.lblPalmaresKosten;
+      document.getElementById('lblLidgeldKosten').innerHTML = t.lblLidgeldKosten;
+      document.getElementById('lblTotaalTeBetalen').innerHTML = t.lblTotaalTeBetalen;
+
+      document.getElementById('txtSectie4').innerHTML = t.sec4;
+      document.getElementById('lblAkkoord').innerHTML = t.akkoord;
+      document.getElementById('btnText').innerHTML = t.btnText;
+
+      // Dropdowns in bestaande dier-rijen updaten
+      document.querySelectorAll('#dierenBody tr').forEach(row => {
+        updateRijTaal(row, t);
+      });
+
+      // Bevestigingsscherm elementen
+      document.getElementById('confTitel').innerHTML = t.confTitel;
+      document.getElementById('confSub').innerHTML = t.confSub;
+      document.getElementById('confBankTitel').innerHTML = t.confBankTitel;
+      document.getElementById('confBankTekst1').innerHTML = t.confBankTekst1;
+      document.getElementById('confBankTekst2').innerHTML = t.confBankTekst2;
+      document.getElementById('lblBegunstigde').innerHTML = t.lblBegunstigde;
+      document.getElementById('lblRekening').innerHTML = t.lblRekening;
+      document.getElementById('lblMededeling').innerHTML = t.lblMededeling;
+      document.getElementById('confMededelingTekst').innerHTML = t.confMededelingTekst;
+      document.getElementById('confInentingTekst').innerHTML = t.confInentingTekst;
+      document.getElementById('confOverzichtTitel').innerHTML = t.confOverzichtTitel;
+      document.getElementById('confDierenTitel').innerHTML = t.confDierenTitel;
+      document.getElementById('btnPrint').innerHTML = t.btnPrint;
+
+      document.getElementById('rowFokkersnr').innerHTML = t.fokkersnr.replace(':', '');
+      document.getElementById('rowNaam').innerHTML = t.naam.replace(':', '');
+      document.getElementById('rowAdres').innerHTML = t.adres.replace(':', '');
+      document.getElementById('rowContact').innerHTML = (t.email + " & " + t.telefoon).replace(/:/g, '');
+      document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
+      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '');
+      document.getElementById('rowLidgeld').innerHTML = t.lidgeld.replace(':', '');
+
+      document.getElementById('thConfSoort').innerHTML = t.thSoort.replace(' *', '');
+      document.getElementById('thConfRas').innerHTML = t.thRas.replace(' *', '');
+      document.getElementById('thConfKleur').innerHTML = t.thKleur.replace(' *', '');
+      document.getElementById('thConfLeeftijd').innerHTML = t.thLeeftijd.replace(' *', '');
+      document.getElementById('thConfGeslacht').innerHTML = t.thGeslacht.replace(' *', '');
+      document.getElementById('thConfRing').innerHTML = t.thRing.replace(' *', '');
+      document.getElementById('thConfPrijs').innerHTML = t.thPrijs;
+      document.getElementById('thConfAanduiding').innerHTML = t.thAanduiding;
+
+      berekenTotaal();
+    }
+
+    function updateRijTaal(row, t) {
+      const selectSoort = row.querySelector('.dier-soort');
+      const gekozenSoort = selectSoort.value;
+      selectSoort.innerHTML = `<option value="">${t.kies}</option>` + 
+        t.soorten.map(s => `<option value="${s.val}" ${s.val === gekozenSoort ? 'selected' : ''}>${s.label}</option>`).join('');
+
+      const selectLeeftijd = row.querySelector('.dier-leeftijd');
+      const gekozenLeeftijd = selectLeeftijd.value;
+      selectLeeftijd.innerHTML = `<option value="">${t.kies}</option>` + 
+        t.leeftijden.map(l => `<option value="${l.val}" ${l.val === gekozenLeeftijd ? 'selected' : ''}>${l.label}</option>`).join('');
+
+      const selectGeslacht = row.querySelector('.dier-geslacht');
+      const gekozenGeslacht = selectGeslacht.value;
+      selectGeslacht.innerHTML = `<option value="">${t.kies}</option>` + 
+        t.geslachten.map(g => `<option value="${g.val}" ${g.val === gekozenGeslacht ? 'selected' : ''}>${g.label}</option>`).join('');
+
+      row.querySelector('.dier-prijs').placeholder = t.optioneel;
+      row.querySelector('.dier-aanduiding').placeholder = t.optioneel;
+    }
+
     function voegDierRijToe() {
+      const t = vertalingen[huidigeTaal];
       const tbody = document.getElementById('dierenBody');
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>
-          <select class="dier-soort" onchange="berekenTotaal()">
-            <option value="">-- Kies --</option>
-            <option value="Duiven">Duiven</option>
-            <option value="Grote hoenders">Grote hoenders</option>
-            <option value="Krielen">Krielen</option>
-            <option value="Konijnen">Konijnen</option>
-            <option value="Cavia's">Cavia's</option>
-            <option value="Parkvogels">Parkvogels</option>
-            <option value="Watervogels">Watervogels</option>
-          </select>
-        </td>
-        <td><input type="text" class="dier-ras" placeholder="Ras" oninput="berekenTotaal()"></td>
-        <td><input type="text" class="dier-kleur" placeholder="Kleur"></td>
-        <td>
-          <select class="dier-leeftijd">
-            <option value="">-- Kies --</option>
-            <option value="Oud">Oud</option>
-            <option value="Jong">Jong</option>
-          </select>
-        </td>
-        <td>
-          <select class="dier-geslacht">
-            <option value="">-- Kies --</option>
-            <option value="Man">Man</option>
-            <option value="Vrouw">Vrouw</option>
-          </select>
-        </td>
-        <td><input type="text" class="dier-ring" placeholder="Ring/Tatoe"></td>
-        <td><input type="text" class="dier-prijs" placeholder="Optioneel"></td>
-        <td><input type="text" class="dier-aanduiding" placeholder="Optioneel"></td>
+        <td><select class="dier-soort" onchange="berekenTotaal()"></select></td>
+        <td><input type="text" class="dier-ras" placeholder="Ras / Race" oninput="berekenTotaal()"></td>
+        <td><input type="text" class="dier-kleur" placeholder="Kleur / Couleur"></td>
+        <td><select class="dier-leeftijd"></select></td>
+        <td><select class="dier-geslacht"></select></td>
+        <td><input type="text" class="dier-ring" placeholder="Ring / Bague"></td>
+        <td><input type="text" class="dier-prijs" placeholder="${t.optioneel}"></td>
+        <td><input type="text" class="dier-aanduiding" placeholder="${t.optioneel}"></td>
         <td><button type="button" class="btn-del" onclick="this.closest('tr').remove(); berekenTotaal();">X</button></td>
       `;
       tbody.appendChild(tr);
+      updateRijTaal(tr, t);
       berekenTotaal();
     }
 
@@ -292,13 +550,15 @@
       return totaal;
     }
 
-    // Start met 3 rijen
+    // Initialiseer met Nederlands en 3 lege rijen
+    wisselTaal('nl');
     voegDierRijToe();
     voegDierRijToe();
     voegDierRijToe();
 
     document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      const t = vertalingen[huidigeTaal];
       
       const dieren = [];
       let validatieFout = false;
@@ -313,11 +573,10 @@
         const prijs = row.querySelector('.dier-prijs').value.trim();
         const aanduiding = row.querySelector('.dier-aanduiding').value.trim();
 
-        // Als 1 van de velden is aangeraakt, moeten de eerste 6 verplicht ingevuld zijn
         if (soort !== "" || ras !== "" || kleur !== "" || leeftijd !== "" || geslacht !== "" || ring !== "" || prijs !== "" || aanduiding !== "") {
           if (!soort || !ras || !kleur || !leeftijd || !geslacht || !ring) {
             validatieFout = true;
-            alert(`Gelieve bij dier #${index + 1} alle verplichte velden in te vullen (Diersoort, Ras, Kleur, Oud/Jong, Man/Vrouw, Ring/Tatoe).`);
+            alert(t.valAlert(index + 1));
           } else {
             dieren.push({ soort, ras, kleur, leeftijd, geslacht, ring, prijs, aanduiding });
           }
@@ -326,16 +585,16 @@
 
       if (validatieFout) return;
 
-      // Start tandwiel spinner
       const btn = document.getElementById('submitBtn');
       const spinner = document.getElementById('btnSpinner');
       const btnText = document.getElementById('btnText');
       btn.disabled = true;
       spinner.style.display = 'inline-block';
-      btnText.textContent = 'Bezig met verzenden...';
+      btnText.textContent = t.btnSending;
 
       const lidgeldSelect = document.getElementById('optie_lidgeld');
-      const gekozenLidgeldLabel = lidgeldSelect.options[lidgeldSelect.selectedIndex].getAttribute('data-label');
+      const gekozenLidgeldSheet = lidgeldSelect.options[lidgeldSelect.selectedIndex].getAttribute('data-sheet');
+      const gekozenLidgeldLabel = lidgeldSelect.options[lidgeldSelect.selectedIndex].textContent;
       const totaalBedrag = berekenTotaal();
       const totaalGeformatteerd = "€" + totaalBedrag.toFixed(2).replace('.', ',');
 
@@ -355,7 +614,7 @@
       formData.append('telefoon', document.getElementById('telefoon').value);
       formData.append('lid_van', lidVanVal);
       formData.append('bankrekening', ibanVal);
-      formData.append('optie_lidgeld', gekozenLidgeldLabel);
+      formData.append('optie_lidgeld', gekozenLidgeldSheet);
       formData.append('totaal_bedrag', totaalGeformatteerd);
       formData.append('dierenJSON', JSON.stringify(dieren));
 
@@ -364,7 +623,6 @@
         document.getElementById('bevestigingScherm').style.display = 'block';
         window.scrollTo(0, 0);
 
-        // Gegevens invullen in bevestiging
         document.getElementById('confTotaalBedrag').textContent = totaalGeformatteerd;
         document.getElementById('confNaamMededeling').textContent = naamVal;
         document.getElementById('confFokkersnr').textContent = fokkersnrVal;
@@ -378,7 +636,7 @@
         const tbody = document.getElementById('confDierenBody');
         tbody.innerHTML = '';
         if (dieren.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:10px; color:#666;">Geen dieren ingeschreven</td></tr>';
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:10px; color:#666;">-</td></tr>`;
         } else {
           dieren.forEach((d, i) => {
             const tr = document.createElement('tr');
