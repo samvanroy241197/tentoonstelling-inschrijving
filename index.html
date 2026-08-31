@@ -5,31 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inschrijving Tentoonstelling 2026 - De Pajottenlanders</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 20px auto; padding: 20px; background-color: #f4f6f8; color: #333; line-height: 1.5; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 15px; background-color: #f4f6f8; color: #333; line-height: 1.5; }
     .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
-    h1, h2, h3 { color: #1e3a8a; }
+    h1, h2, h3 { color: #1e3a8a; margin-top: 0; }
     
-    .lang-container { display: flex; align-items: center; gap: 8px; margin: 15px 0 20px 0; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
+    .lang-container { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 15px 0 20px 0; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
     .lang-btn { padding: 6px 14px; border: 1px solid #cbd5e1; background: white; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px; color: #475569; }
     .lang-btn.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
 
-    .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; margin-bottom: 20px; font-size: 0.95em; }
+    .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; margin-bottom: 20px; font-size: 0.95em; border-radius: 0 4px 4px 0; }
     .form-group { margin-bottom: 15px; }
-    label { display: block; font-weight: bold; margin-bottom: 5px; }
-    input[type="text"], input[type="email"], input[type="tel"], select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em; }
+    input[type="text"], input[type="email"], input[type="tel"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    
+    /* Desktop Tabel Weergave */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
     th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
     th { background: #f8fafc; }
     .th-sub { font-size: 0.75em; font-weight: normal; display: block; color: #666; }
+    
     .btn { background: #1e3a8a; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
     .btn:hover { background: #1e40af; }
     .btn:disabled { background: #94a3b8; cursor: not-allowed; }
-    .btn-secondary { background: #64748b; font-size: 14px; padding: 8px 12px; margin-top: 10px; }
+    .btn-secondary { background: #64748b; font-size: 14px; padding: 10px 16px; margin-top: 10px; }
     .btn-secondary:hover { background: #475569; }
-    .btn-del { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-weight: bold; }
-    .total-box { background: #e0f2fe; border: 2px solid #0284c7; padding: 15px; border-radius: 6px; margin-top: 20px; font-size: 1.1em; }
-    .total-box strong { font-size: 1.3em; color: #0369a1; }
+    .btn-del { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    
+    .total-box { background: #e0f2fe; border: 2px solid #0284c7; padding: 15px; border-radius: 6px; margin-top: 20px; font-size: 1.05em; }
+    .total-box strong { font-size: 1.25em; color: #0369a1; }
     
     .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -38,8 +44,62 @@
     .success-badge { background: #dcfce7; border-left: 4px solid #16a34a; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
     .bank-box { background: #fef9c3; border: 2px dashed #ca8a04; padding: 18px; border-radius: 6px; margin: 20px 0; }
     .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    .summary-table td { padding: 6px 10px; border: 1px solid #e2e8f0; }
-    .summary-table td:first-child { font-weight: bold; width: 30%; background: #f8fafc; }
+    .summary-table td { padding: 8px 10px; border: 1px solid #e2e8f0; }
+    .summary-table td:first-child { font-weight: bold; width: 35%; background: #f8fafc; }
+
+    /* Mobiele Transformatie voor Kaarten */
+    @media (max-width: 768px) {
+      body { padding: 8px; }
+      .card { padding: 15px; }
+      .grid-2 { grid-template-columns: 1fr; gap: 0; }
+      .btn { width: 100%; }
+
+      /* Tabel transformeren naar een stapel kaarten */
+      #dierenTabel thead { display: none; }
+      #dierenTabel, #dierenTabel tbody, #dierenTabel tr, #dierenTabel td { display: block; width: 100%; }
+      #dierenTabel tr {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 15px;
+        position: relative;
+      }
+      #dierenTabel td {
+        border: none;
+        padding: 6px 0;
+      }
+      #dierenTabel td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        font-size: 0.85em;
+        margin-bottom: 4px;
+        color: #475569;
+      }
+      .mobile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .btn-del-container {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 8px !important;
+        border-top: 1px dashed #cbd5e1 !important;
+        margin-top: 8px;
+      }
+      .btn-del { width: 100%; padding: 8px; }
+
+      /* Mobiele weergave van de samenvattingstabel */
+      #confDierenTable thead { display: none; }
+      #confDierenTable, #confDierenTable tbody, #confDierenTable tr, #confDierenTable td { display: block; width: 100%; }
+      #confDierenTable tr { background: #f8fafc; border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
+      #confDierenTable td { border: none; padding: 4px 0; display: flex; justify-content: space-between; }
+      #confDierenTable td::before { content: attr(data-label); font-weight: bold; color: #64748b; }
+      .summary-table td { display: block; width: 100% !important; }
+      .summary-table td:first-child { border-bottom: none; }
+    }
   </style>
 </head>
 <body>
@@ -57,11 +117,12 @@
       
       <h3 id="txtSectie1">1. Persoonlijke Gegevens</h3>
       
-      <!-- Taalkeuze direct onder Persoonlijke Gegevens -->
       <div class="lang-container">
         <span style="font-size: 13px; color: #475569; font-weight: bold;" id="lblTaalkeuze">Kies uw taal / Choisissez votre langue:</span>
-        <button type="button" class="lang-btn active" id="btnNL" onclick="wisselTaal('nl')">Nederlands</button>
-        <button type="button" class="lang-btn" id="btnFR" onclick="wisselTaal('fr')">Français</button>
+        <div>
+          <button type="button" class="lang-btn active" id="btnNL" onclick="wisselTaal('nl')">Nederlands</button>
+          <button type="button" class="lang-btn" id="btnFR" onclick="wisselTaal('fr')">Français</button>
+        </div>
       </div>
 
       <div class="grid-2">
@@ -182,7 +243,7 @@
     <div class="bank-box">
       <h3 style="margin-top: 0; color: #854d0e;" id="confBankTitel">Belangrijke Betaalinstructies</h3>
       <p><span id="confBankTekst1">Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van</span> <strong id="confTotaalBedrag" style="font-size: 1.2em; color:#854d0e;">€0,00</strong> <span id="confBankTekst2">vóór <strong>1 november</strong> over te schrijven naar[cite: 1]:</span></p>
-      <ul style="list-style-type: none; padding-left: 0; font-size: 1.05em;">
+      <ul style="list-style-type: none; padding-left: 0; font-size: 1.05em; line-height: 1.8;">
         <li><strong id="lblBegunstigde">Begunstigde:</strong> Kleinveevereniging De Pajottenlanders vzw[cite: 1]</li>
         <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858[cite: 1]</li>
         <li><strong>BIC:</strong> GEBABEBB[cite: 1]</li>
@@ -203,7 +264,7 @@
     </table>
 
     <h4 style="margin-top: 20px;" id="confDierenTitel">Ingeschreven Dieren</h4>
-    <table style="width: 100%; border-collapse: collapse;">
+    <table id="confDierenTable" style="width: 100%; border-collapse: collapse;">
       <thead>
         <tr style="background: #f1f5f9;">
           <th style="border:1px solid #ddd; padding:6px;">#</th>
@@ -264,6 +325,7 @@
         thPrijsSub: "leeglaten indien niet te koop",
         thAanduiding: "Aanduiding",
         btnAddDier: "+ Dier toevoegen",
+        btnDel: "Dier verwijderen",
         kies: "-- Kies --",
         optioneel: "Optioneel",
         soorten: [
@@ -341,6 +403,7 @@
         thPrijsSub: "laisser vide si non à vendre",
         thAanduiding: "Remarque",
         btnAddDier: "+ Ajouter un animal",
+        btnDel: "Supprimer l'animal",
         kies: "-- Choisir --",
         optioneel: "Optionnel",
         soorten: [
@@ -483,6 +546,15 @@
     }
 
     function updateRijTaal(row, t) {
+      row.children[0].setAttribute('data-label', t.thSoort);
+      row.children[1].setAttribute('data-label', t.thRas);
+      row.children[2].setAttribute('data-label', t.thKleur);
+      row.children[3].setAttribute('data-label', t.thLeeftijd);
+      row.children[4].setAttribute('data-label', t.thGeslacht);
+      row.children[5].setAttribute('data-label', t.thRing);
+      row.children[6].setAttribute('data-label', t.thPrijs);
+      row.children[7].setAttribute('data-label', t.thAanduiding);
+
       const selectSoort = row.querySelector('.dier-soort');
       const gekozenSoort = selectSoort.value;
       selectSoort.innerHTML = `<option value="">${t.kies}</option>` + 
@@ -500,6 +572,7 @@
 
       row.querySelector('.dier-prijs').placeholder = t.optioneel;
       row.querySelector('.dier-aanduiding').placeholder = t.optioneel;
+      row.querySelector('.btn-del').textContent = window.innerWidth <= 768 ? t.btnDel : 'X';
     }
 
     function voegDierRijToe() {
@@ -507,15 +580,15 @@
       const tbody = document.getElementById('dierenBody');
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><select class="dier-soort" onchange="berekenTotaal()"></select></td>
-        <td><input type="text" class="dier-ras" placeholder="Ras / Race" oninput="berekenTotaal()"></td>
-        <td><input type="text" class="dier-kleur" placeholder="Kleur / Couleur"></td>
-        <td><select class="dier-leeftijd"></select></td>
-        <td><select class="dier-geslacht"></select></td>
-        <td><input type="text" class="dier-ring" placeholder="Ring / Bague"></td>
-        <td><input type="text" class="dier-prijs" placeholder="${t.optioneel}"></td>
-        <td><input type="text" class="dier-aanduiding" placeholder="${t.optioneel}"></td>
-        <td><button type="button" class="btn-del" onclick="this.closest('tr').remove(); berekenTotaal();">X</button></td>
+        <td data-label="${t.thSoort}"><select class="dier-soort" onchange="berekenTotaal()"></select></td>
+        <td data-label="${t.thRas}"><input type="text" class="dier-ras" placeholder="Ras / Race" oninput="berekenTotaal()"></td>
+        <td data-label="${t.thKleur}"><input type="text" class="dier-kleur" placeholder="Kleur / Couleur"></td>
+        <td data-label="${t.thLeeftijd}"><select class="dier-leeftijd"></select></td>
+        <td data-label="${t.thGeslacht}"><select class="dier-geslacht"></select></td>
+        <td data-label="${t.thRing}"><input type="text" class="dier-ring" placeholder="Ring / Bague"></td>
+        <td data-label="${t.thPrijs}"><input type="text" class="dier-prijs" placeholder="${t.optioneel}"></td>
+        <td data-label="${t.thAanduiding}"><input type="text" class="dier-aanduiding" placeholder="${t.optioneel}"></td>
+        <td class="btn-del-container"><button type="button" class="btn-del" onclick="this.closest('tr').remove(); berekenTotaal();">${window.innerWidth <= 768 ? t.btnDel : 'X'}</button></td>
       `;
       tbody.appendChild(tr);
       updateRijTaal(tr, t);
@@ -544,6 +617,13 @@
       
       return totaal;
     }
+
+    window.addEventListener('resize', () => {
+      const t = vertalingen[huidigeTaal];
+      document.querySelectorAll('.btn-del').forEach(b => {
+        b.textContent = window.innerWidth <= 768 ? t.btnDel : 'X';
+      });
+    });
 
     wisselTaal('nl');
     voegDierRijToe();
@@ -635,15 +715,15 @@
           dieren.forEach((d, i) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-              <td style="border:1px solid #ddd; padding:6px;">${i + 1}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.soort}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.ras}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.kleur}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.leeftijd}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.geslacht}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.ring}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.prijs || '-'}</td>
-              <td style="border:1px solid #ddd; padding:6px;">${d.aanduiding || '-'}</td>
+              <td data-label="#">${i + 1}</td>
+              <td data-label="${t.thSoort.replace(' *','')}">${d.soort}</td>
+              <td data-label="${t.thRas.replace(' *','')}">${d.ras}</td>
+              <td data-label="${t.thKleur.replace(' *','')}">${d.kleur}</td>
+              <td data-label="${t.thLeeftijd.replace(' *','')}">${d.leeftijd}</td>
+              <td data-label="${t.thGeslacht.replace(' *','')}">${d.geslacht}</td>
+              <td data-label="${t.thRing.replace(' *','')}">${d.ring}</td>
+              <td data-label="${t.thPrijs}">${d.prijs || '-'}</td>
+              <td data-label="${t.thAanduiding}">${d.aanduiding || '-'}</td>
             `;
             tbody.appendChild(tr);
           });
