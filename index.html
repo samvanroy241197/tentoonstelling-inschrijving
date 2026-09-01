@@ -15,6 +15,8 @@
     .lang-btn.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
 
     .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; margin-bottom: 20px; font-size: 0.95em; border-radius: 0 4px 4px 0; }
+    .alert-warning-box { background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 10px 14px; margin-top: 10px; font-size: 0.9em; border-radius: 0 4px 4px 0; display: none; }
+    
     .form-group { margin-bottom: 15px; }
     label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em; }
     input[type="text"], input[type="email"], input[type="tel"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; }
@@ -22,11 +24,13 @@
     
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     
-    .checkbox-group { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
-    .checkbox-label { display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer; padding: 6px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; }
+    .optie-subgroep { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-bottom: 15px; }
+    .optie-subgroep-titel { font-weight: bold; color: #1e3a8a; margin-bottom: 10px; font-size: 0.95em; }
+    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-label { display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer; padding: 6px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px; }
     .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
 
-    /* Desktop Tabel Weergave */
+    /* Desktop Tabel */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
     th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
     th { background: #f8fafc; }
@@ -182,11 +186,26 @@
         <input type="text" id="valPalmares" value="7,00 EUR (1 per gezin verplicht)" disabled>
       </div>
 
-      <div class="form-group">
-        <label id="lblOptiesKop">Kies eventuele extra opties (meerdere keuzes mogelijk):</label>
-        <div class="checkbox-group" id="optiesContainer">
-          <!-- Dynamisch gegenereerd via JS -->
+      <!-- Groep 1: Lidgeld 2027 -->
+      <div class="optie-subgroep">
+        <div class="optie-subgroep-titel" id="lblGroepLidgeld">Lidgeld De Pajottenlanders (2027)</div>
+        <div class="checkbox-group" id="containerLidgeld">
+          <!-- Dynamisch -->
         </div>
+      </div>
+
+      <!-- Groep 2: Fokkersnummer 2027 -->
+      <div class="optie-subgroep">
+        <div class="optie-subgroep-titel" id="lblGroepFokker">Fokkersnummer aanvragen (Seizoen 2027)</div>
+        <div class="checkbox-group" id="containerFokkersnummer">
+          <!-- Dynamisch -->
+        </div>
+        <div id="fokkerWarning" class="alert-warning-box"></div>
+      </div>
+
+      <!-- Herhaalde disclaimer onder de opties -->
+      <div class="alert-info" id="txtAlertOnderaan" style="margin-top: 15px;">
+        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
@@ -208,7 +227,7 @@
           </tr>
         </thead>
         <tbody id="dierenBody">
-          <!-- Rijen via JS -->
+          <!-- Minstens 5 rijen -->
         </tbody>
       </table>
       
@@ -317,14 +336,18 @@
         sec2: "2. Opties & Lidgelden",
         palmares: "Verplicht palmares:",
         palmaresVal: "7,00 EUR (1 per gezin verplicht)",
-        optiesKop: "Kies eventuele extra opties (meerdere keuzes mogelijk):",
-        optiesLijst: [
+        lblGroepLidgeld: "Lidgeld De Pajottenlanders (2027)",
+        lidgeldOpties: [
           { id: "lid_papieren", prijs: 15, label: "Lidgeld 2027 met papieren clubblad (€15,00)" },
           { id: "lid_digitaal", prijs: 10, label: "Lidgeld 2027 met digitaal clubblad per mail (€10,00)" },
-          { id: "lid_extra", prijs: 3, label: "Lidgeld 2027 vanaf 2de lid zelfde familie (€3,00)" },
+          { id: "lid_extra", prijs: 3, label: "Lidgeld 2027 vanaf 2de lid zelfde familie (€3,00)" }
+        ],
+        lblGroepFokker: "Fokkersnummer aanvragen (Seizoen 2027)",
+        fokkerOpties: [
           { id: "fokker_2027", prijs: 22, label: "Fokkersnummer seizoen 2027 (€22,00)" },
           { id: "fokker_extra", prijs: 3, label: "Fokkersnummer vanaf 2de in gezin (€3,00)" }
         ],
+        fokkerFout: "Opgelet: Een fokkersnummer aanvragen kan enkel als u ook lid bent/wordt van De Pajottenlanders. Duid eerst een lidgeld aan.",
         sec3: "3. Dieren Inschrijven (€5,00 per dier)",
         thSoort: "Diersoort *",
         thRas: "Ras *",
@@ -400,14 +423,18 @@
         sec2: "2. Options & Cotisations",
         palmares: "Palmarès obligatoire:",
         palmaresVal: "7,00 EUR (1 par famille obligatoire)",
-        optiesKop: "Options supplémentaires au choix (choix multiples possibles):",
-        optiesLijst: [
+        lblGroepLidgeld: "Cotisation De Pajottenlanders (2027)",
+        lidgeldOpties: [
           { id: "lid_papieren", prijs: 15, label: "Cotisation 2027 avec revue papier (€15,00)" },
           { id: "lid_digitaal", prijs: 10, label: "Cotisation 2027 avec revue numérique par e-mail (€10,00)" },
-          { id: "lid_extra", prijs: 3, label: "Cotisation 2027 à partir du 2ème membre (€3,00)" },
+          { id: "lid_extra", prijs: 3, label: "Cotisation 2027 à partir du 2ème membre (€3,00)" }
+        ],
+        lblGroepFokker: "Demander un numéro d'éleveur (Saison 2027)",
+        fokkerOpties: [
           { id: "fokker_2027", prijs: 22, label: "Numéro d'éleveur saison 2027 (€22,00)" },
           { id: "fokker_extra", prijs: 3, label: "Numéro d'éleveur à partir du 2ème membre de famille (€3,00)" }
         ],
+        fokkerFout: "Attention: Pour demander un numéro d'éleveur, vous devez être/devenir membre de l'association. Veuillez d'abord choisir une cotisation.",
         sec3: "3. Inscription des Animaux (€5,00 par animal)",
         thSoort: "Espèce *",
         thRas: "Race *",
@@ -467,26 +494,92 @@
     };
 
     function bouwOptiesCheckboxes() {
-      const container = document.getElementById('optiesContainer');
       const t = vertalingen[huidigeTaal];
       
-      // Bewaar huidige selectiestatus
-      const geselecteerdeIds = [];
-      document.querySelectorAll('#optiesContainer input[type="checkbox"]:checked').forEach(cb => {
-        geselecteerdeIds.push(cb.id);
+      // Bewaar huidige vinkjes
+      const checkedIds = [];
+      document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
+        checkedIds.push(cb.id);
       });
 
-      container.innerHTML = '';
-      t.optiesLijst.forEach(opt => {
-        const isChecked = geselecteerdeIds.includes(opt.id);
+      // 1. Lidgeld Container
+      const cLid = document.getElementById('containerLidgeld');
+      cLid.innerHTML = '';
+      t.lidgeldOpties.forEach(opt => {
+        const isChecked = checkedIds.includes(opt.id);
         const lbl = document.createElement('label');
         lbl.className = 'checkbox-label';
         lbl.innerHTML = `
-          <input type="checkbox" id="${opt.id}" data-prijs="${opt.prijs}" data-label="${opt.label}" ${isChecked ? 'checked' : ''} onchange="berekenTotaal()">
+          <input type="checkbox" id="${opt.id}" data-prijs="${opt.prijs}" data-label="${opt.label}" ${isChecked ? 'checked' : ''} onchange="handleLidgeldWissel(this)">
           <span>${opt.label}</span>
         `;
-        container.appendChild(lbl);
+        cLid.appendChild(lbl);
       });
+
+      // 2. Fokkersnummer Container
+      const cFokker = document.getElementById('containerFokkersnummer');
+      cFokker.innerHTML = '';
+      t.fokkerOpties.forEach(opt => {
+        const isChecked = checkedIds.includes(opt.id);
+        const lbl = document.createElement('label');
+        lbl.className = 'checkbox-label';
+        lbl.innerHTML = `
+          <input type="checkbox" id="${opt.id}" data-prijs="${opt.prijs}" data-label="${opt.label}" ${isChecked ? 'checked' : ''} onchange="handleFokkerWissel(this)">
+          <span>${opt.label}</span>
+        `;
+        cFokker.appendChild(lbl);
+      });
+    }
+
+    // Regels voor Lidgeld: enkel papieren OF digitaal
+    function handleLidgeldWissel(cb) {
+      if (cb.id === 'lid_papieren' && cb.checked) {
+        const dig = document.getElementById('lid_digitaal');
+        if (dig) dig.checked = false;
+      } else if (cb.id === 'lid_digitaal' && cb.checked) {
+        const pap = document.getElementById('lid_papieren');
+        if (pap) pap.checked = false;
+      }
+
+      // Als lidgeld wordt uitgevinkt, controleer of er nog fokkersnummers aangevinkt staan
+      const heeftLidgeld = isLidgeldGekozen();
+      if (!heeftLidgeld) {
+        document.querySelectorAll('#containerFokkersnummer input:checked').forEach(fCb => {
+          fCb.checked = false;
+        });
+      }
+      
+      verbergFokkerFout();
+      berekenTotaal();
+    }
+
+    function isLidgeldGekozen() {
+      const p = document.getElementById('lid_papieren');
+      const d = document.getElementById('lid_digitaal');
+      const e = document.getElementById('lid_extra');
+      return (p && p.checked) || (d && d.checked) || (e && e.checked);
+    }
+
+    // Regels voor Fokkersnummer: enkel toegelaten als er lidgeld is
+    function handleFokkerWissel(cb) {
+      if (cb.checked && !isLidgeldGekozen()) {
+        cb.checked = false;
+        toonFokkerFout();
+      } else {
+        verbergFokkerFout();
+      }
+      berekenTotaal();
+    }
+
+    function toonFokkerFout() {
+      const t = vertalingen[huidigeTaal];
+      const box = document.getElementById('fokkerWarning');
+      box.textContent = t.fokkerFout;
+      box.style.display = 'block';
+    }
+
+    function verbergFokkerFout() {
+      document.getElementById('fokkerWarning').style.display = 'none';
     }
 
     function wisselTaal(taal) {
@@ -499,6 +592,7 @@
       document.getElementById('txtTitel').innerHTML = t.titel;
       document.getElementById('txtSubtitel').innerHTML = t.subtitel;
       document.getElementById('txtAlert').innerHTML = t.alert;
+      document.getElementById('txtAlertOnderaan').innerHTML = t.alert;
       document.getElementById('txtSectie1').innerHTML = t.sec1;
       document.getElementById('lblTaalkeuze').innerHTML = t.lblTaalkeuze;
       document.getElementById('lblFokkersnr').innerHTML = t.fokkersnr;
@@ -517,7 +611,8 @@
       document.getElementById('txtSectie2').innerHTML = t.sec2;
       document.getElementById('lblPalmares').innerHTML = t.palmares;
       document.getElementById('valPalmares').value = t.palmaresVal;
-      document.getElementById('lblOptiesKop').innerHTML = t.optiesKop;
+      document.getElementById('lblGroepLidgeld').innerHTML = t.lblGroepLidgeld;
+      document.getElementById('lblGroepFokker').innerHTML = t.lblGroepFokker;
 
       bouwOptiesCheckboxes();
 
@@ -634,7 +729,7 @@
         <td class="btn-action-container">
           <div class="action-btns">
             <button type="button" class="btn-action btn-copy" title="Kopieer rij" onclick="dupliceerRij(this)">${window.innerWidth <= 768 ? t.btnCopy : '📋'}</button>
-            <button type="button" class="btn-action btn-del" title="Verwijder rij" onclick="this.closest('tr').remove(); berekenTotaal();">${window.innerWidth <= 768 ? t.btnDel : '✕'}</button>
+            <button type="button" class="btn-action btn-del" title="Verwijder rij" onclick="verwijderRij(this)">${window.innerWidth <= 768 ? t.btnDel : '✕'}</button>
           </div>
         </td>
       `;
@@ -655,6 +750,15 @@
       berekenTotaal();
     }
 
+    function verwijderRij(btn) {
+      btn.closest('tr').remove();
+      // Zorg dat er altijd minstens 5 rijen blijven staan
+      while (document.querySelectorAll('#dierenBody tr').length < 5) {
+        voegDierRijToe();
+      }
+      berekenTotaal();
+    }
+
     function dupliceerRij(btn) {
       const row = btn.closest('tr');
       const data = {
@@ -663,7 +767,7 @@
         kleur: row.querySelector('.dier-kleur').value,
         geslacht: row.querySelector('.dier-geslacht').value,
         leeftijd: row.querySelector('.dier-leeftijd').value,
-        ring: '', // Ringnummer bewust leeg laten bij dupliceren
+        ring: '',
         prijs: row.querySelector('.dier-prijs').value,
         aanduiding: row.querySelector('.dier-aanduiding').value
       };
@@ -683,7 +787,7 @@
       const kostenDieren = geteldeDieren * 5;
       
       let extraOptiesTotaal = 0;
-      document.querySelectorAll('#optiesContainer input[type="checkbox"]:checked').forEach(cb => {
+      document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         extraOptiesTotaal += parseFloat(cb.getAttribute('data-prijs')) || 0;
       });
 
@@ -708,10 +812,13 @@
       });
     });
 
+    // 1. Initialiseer formulier
     wisselTaal('nl');
-    voegDierRijToe();
-    voegDierRijToe();
-    voegDierRijToe();
+
+    // 2. Start standaard met 5 rijen
+    for (let i = 0; i < 5; i++) {
+      voegDierRijToe();
+    }
 
     document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -750,7 +857,7 @@
       btnText.textContent = t.btnSending;
 
       const gekozenOpties = [];
-      document.querySelectorAll('#optiesContainer input[type="checkbox"]:checked').forEach(cb => {
+      document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         gekozenOpties.push(cb.getAttribute('data-label'));
       });
       const optiesTekst = gekozenOpties.length > 0 ? gekozenOpties.join(" | ") : "Geen";
