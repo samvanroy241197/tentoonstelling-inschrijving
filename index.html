@@ -113,7 +113,7 @@
     <h1 id="txtTitel">De Pajottenlanders vzw</h1>
     <h3 id="txtSubtitel">Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
     
-    <div class="alert-info" id="txtAlert">
+    <div class="alert-info" id="txtAlertBoven">
       <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
     </div>
 
@@ -189,23 +189,14 @@
       <!-- Groep 1: Lidgeld 2027 -->
       <div class="optie-subgroep">
         <div class="optie-subgroep-titel" id="lblGroepLidgeld">Lidgeld De Pajottenlanders (2027)</div>
-        <div class="checkbox-group" id="containerLidgeld">
-          <!-- Dynamisch -->
-        </div>
+        <div class="checkbox-group" id="containerLidgeld"></div>
       </div>
 
       <!-- Groep 2: Fokkersnummer 2027 -->
       <div class="optie-subgroep">
         <div class="optie-subgroep-titel" id="lblGroepFokker">Fokkersnummer aanvragen (Seizoen 2027)</div>
-        <div class="checkbox-group" id="containerFokkersnummer">
-          <!-- Dynamisch -->
-        </div>
+        <div class="checkbox-group" id="containerFokkersnummer"></div>
         <div id="fokkerWarning" class="alert-warning-box"></div>
-      </div>
-
-      <!-- Herhaalde disclaimer onder de opties -->
-      <div class="alert-info" id="txtAlertOnderaan" style="margin-top: 15px;">
-        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
@@ -226,9 +217,7 @@
             <th style="width: 60px;">Actie</th>
           </tr>
         </thead>
-        <tbody id="dierenBody">
-          <!-- Minstens 5 rijen -->
-        </tbody>
+        <tbody id="dierenBody"></tbody>
       </table>
       
       <button type="button" class="btn btn-secondary" id="btnAddDier" onclick="voegDierRijToe()">+ Dier toevoegen</button>
@@ -255,6 +244,11 @@
         <span id="btnSpinner" class="spinner" style="display:none;"></span>
         <span id="btnText">Inschrijving Verzenden</span>
       </button>
+
+      <!-- Disclaimer onder de bevestigingsknop -->
+      <div class="alert-info" id="txtAlertOnderaan" style="margin-top: 25px; margin-bottom: 0;">
+        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
+      </div>
 
     </form>
   </div>
@@ -407,7 +401,7 @@
       fr: {
         titel: "De Pajottenlanders asbl",
         subtitel: "Formulaire d'inscription 2026 - Exposition / Concours provincial",
-        alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient définitive qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas d'envoyer une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
+        alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient definitiva qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas d'envoyer une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
         sec1: "1. Coordonnées Personnelles",
         lblTaalkeuze: "Choisissez votre langue / Kies uw taal:",
         fokkersnr: "Carte / Numéro d'éleveur (Optionnel):",
@@ -495,14 +489,11 @@
 
     function bouwOptiesCheckboxes() {
       const t = vertalingen[huidigeTaal];
-      
-      // Bewaar huidige vinkjes
       const checkedIds = [];
       document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         checkedIds.push(cb.id);
       });
 
-      // 1. Lidgeld Container
       const cLid = document.getElementById('containerLidgeld');
       cLid.innerHTML = '';
       t.lidgeldOpties.forEach(opt => {
@@ -516,7 +507,6 @@
         cLid.appendChild(lbl);
       });
 
-      // 2. Fokkersnummer Container
       const cFokker = document.getElementById('containerFokkersnummer');
       cFokker.innerHTML = '';
       t.fokkerOpties.forEach(opt => {
@@ -531,7 +521,6 @@
       });
     }
 
-    // Regels voor Lidgeld: enkel papieren OF digitaal
     function handleLidgeldWissel(cb) {
       if (cb.id === 'lid_papieren' && cb.checked) {
         const dig = document.getElementById('lid_digitaal');
@@ -541,9 +530,7 @@
         if (pap) pap.checked = false;
       }
 
-      // Als lidgeld wordt uitgevinkt, controleer of er nog fokkersnummers aangevinkt staan
-      const heeftLidgeld = isLidgeldGekozen();
-      if (!heeftLidgeld) {
+      if (!isLidgeldGekozen()) {
         document.querySelectorAll('#containerFokkersnummer input:checked').forEach(fCb => {
           fCb.checked = false;
         });
@@ -560,7 +547,6 @@
       return (p && p.checked) || (d && d.checked) || (e && e.checked);
     }
 
-    // Regels voor Fokkersnummer: enkel toegelaten als er lidgeld is
     function handleFokkerWissel(cb) {
       if (cb.checked && !isLidgeldGekozen()) {
         cb.checked = false;
@@ -591,7 +577,7 @@
 
       document.getElementById('txtTitel').innerHTML = t.titel;
       document.getElementById('txtSubtitel').innerHTML = t.subtitel;
-      document.getElementById('txtAlert').innerHTML = t.alert;
+      document.getElementById('txtAlertBoven').innerHTML = t.alert;
       document.getElementById('txtAlertOnderaan').innerHTML = t.alert;
       document.getElementById('txtSectie1').innerHTML = t.sec1;
       document.getElementById('lblTaalkeuze').innerHTML = t.lblTaalkeuze;
@@ -626,7 +612,6 @@
       document.getElementById('thPrijs').innerHTML = t.thPrijs;
       document.getElementById('thPrijsSub').innerHTML = t.thPrijsSub;
       document.getElementById('thAanduiding').innerHTML = t.thAanduiding;
-      document.getElementById('thActie').innerHTML = t.thActie;
       document.getElementById('btnAddDier').innerHTML = t.btnAddDier;
 
       document.getElementById('lblAantalDieren').innerHTML = t.lblAantalDieren;
@@ -752,10 +737,6 @@
 
     function verwijderRij(btn) {
       btn.closest('tr').remove();
-      // Zorg dat er altijd minstens 5 rijen blijven staan
-      while (document.querySelectorAll('#dierenBody tr').length < 5) {
-        voegDierRijToe();
-      }
       berekenTotaal();
     }
 
@@ -812,10 +793,10 @@
       });
     });
 
-    // 1. Initialiseer formulier
+    // 1. Initialiseer formulier & talen
     wisselTaal('nl');
 
-    // 2. Start standaard met 5 rijen
+    // 2. Open standaard exact 5 rijen
     for (let i = 0; i < 5; i++) {
       voegDierRijToe();
     }
