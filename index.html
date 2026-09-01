@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inschrijving Tentoonstelling 2026 - De Pajottenlanders</title>
   
-  <!-- html2pdf.js voor directe PDF-downloads -->
+  <!-- html2pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
@@ -34,7 +34,7 @@
     .checkbox-label { display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer; padding: 6px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px; }
     .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
 
-    /* Desktop Tabel */
+    /* Desktop Formulier Tabel */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
     th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
     th { background: #f8fafc; }
@@ -67,6 +67,11 @@
     .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     .summary-table td { padding: 8px 10px; border: 1px solid #e2e8f0; }
     .summary-table td:first-child { font-weight: bold; width: 35%; background: #f8fafc; }
+
+    /* Bevestiging Dieren Tabel Styling */
+    .pdf-table { width: 100% !important; border-collapse: collapse !important; margin-top: 10px !important; table-layout: fixed !important; }
+    .pdf-table th, .pdf-table td { border: 1px solid #cbd5e1 !important; padding: 6px 4px !important; font-size: 11px !important; word-wrap: break-word !important; text-align: left; }
+    .pdf-table th { background-color: #f1f5f9 !important; font-weight: bold; }
 
     .button-group-conf { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
 
@@ -102,29 +107,12 @@
         margin-top: 8px;
       }
       .btn-action-container .btn-action { flex: 1; padding: 10px; text-align: center; }
-
-      #confDierenTable thead { display: none; }
-      #confDierenTable, #confDierenTable tbody, #confDierenTable tr, #confDierenTable td { display: block; width: 100%; }
-      #confDierenTable tr { background: #f8fafc; border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
-      #confDierenTable td { border: none; padding: 4px 0; display: flex; justify-content: space-between; }
-      #confDierenTable td::before { content: attr(data-label); font-weight: bold; color: #64748b; }
-      .summary-table td { display: block; width: 100% !important; }
-      .summary-table td:first-child { border-bottom: none; }
     }
 
-    /* Print-specifieke opmaak: dwing altijd een tabel af */
     @media print {
       body { background: white; padding: 0; }
       .card { box-shadow: none; border: none; padding: 0; }
       .button-group-conf, .lang-container { display: none !important; }
-      #confDierenTable thead { display: table-header-group !important; }
-      #confDierenTable { display: table !important; width: 100% !important; }
-      #confDierenTable tbody { display: table-row-group !important; }
-      #confDierenTable tr { display: table-row !important; background: transparent !important; border: none !important; }
-      #confDierenTable th, #confDierenTable td { display: table-cell !important; border: 1px solid #ddd !important; padding: 6px !important; }
-      #confDierenTable td::before { display: none !important; }
-      .summary-table td { display: table-cell !important; width: auto !important; }
-      .summary-table td:first-child { width: 30% !important; }
     }
   </style>
 </head>
@@ -277,26 +265,25 @@
 
   <!-- BEVESTIGINGSSCHERM -->
   <div class="card" id="bevestigingScherm">
-    <div id="printArea">
+    <div id="printArea" style="background: white; padding: 10px;">
       <div class="success-badge">
-        <h2 style="color: #15803d; margin-top: 0;" id="confTitel">Inschrijving Succesvol Verzonden!</h2>
-        <p style="margin-bottom: 0;" id="confSub">Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.</p>
+        <h2 style="color: #15803d; margin-top: 0; font-size: 20px;" id="confTitel">Inschrijving Succesvol Verzonden!</h2>
+        <p style="margin-bottom: 0; font-size: 13px;" id="confSub">Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.</p>
       </div>
 
-      <div class="bank-box">
-        <h3 style="margin-top: 0; color: #854d0e;" id="confBankTitel">Belangrijke Betaalinstructies</h3>
-        <p><span id="confBankTekst1">Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van</span> <strong id="confTotaalBedrag" style="font-size: 1.2em; color:#854d0e;">€0,00</strong> <span id="confBankTekst2">vóór <strong>1 november</strong> over te schrijven naar:</span></p>
-        <ul style="list-style-type: none; padding-left: 0; font-size: 1.05em; line-height: 1.8;">
+      <div class="bank-box" style="padding: 12px; margin: 15px 0;">
+        <h3 style="margin-top: 0; color: #854d0e; font-size: 15px;" id="confBankTitel">Belangrijke Betaalinstructies</h3>
+        <p style="font-size: 13px; margin: 4px 0;"><span id="confBankTekst1">Totaalbedrag:</span> <strong id="confTotaalBedrag" style="font-size: 1.15em; color:#854d0e;">€0,00</strong> (<span id="confBankTekst2">vóór <strong>1 november</strong></span>)</p>
+        <ul style="list-style-type: none; padding-left: 0; font-size: 12px; line-height: 1.6; margin: 5px 0;">
           <li><strong id="lblBegunstigde">Begunstigde:</strong> Kleinveevereniging De Pajottenlanders vzw</li>
-          <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858</li>
-          <li><strong>BIC:</strong> GEBABEBB</li>
+          <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858 (BIC: GEBABEBB)</li>
           <li><strong id="lblMededeling">Mededeling:</strong> <span id="confMededelingTekst">Inschrijving TT 2026 - </span><span id="confNaamMededeling"></span></li>
         </ul>
-        <p style="margin-bottom: 0; font-size: 0.95em; color: #713f12;"><em id="confInentingTekst">Vergeet niet om een kopie van je inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!</em></p>
+        <p style="margin-bottom: 0; font-size: 11px; color: #713f12;"><em id="confInentingTekst">Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!</em></p>
       </div>
 
-      <h3 id="confOverzichtTitel">Overzicht van je Inschrijving</h3>
-      <table class="summary-table">
+      <h3 style="font-size: 15px; color:#1e3a8a; margin-top: 15px; margin-bottom: 6px;" id="confOverzichtTitel">Overzicht van je Inschrijving</h3>
+      <table class="summary-table" style="font-size: 12px;">
         <tr><td id="rowFokkersnr">Fokkerskaart</td><td id="confFokkersnr"></td></tr>
         <tr><td id="rowNaam">Naam & Voornaam</td><td id="confNaam"></td></tr>
         <tr><td id="rowAdres">Adres</td><td id="confAdres"></td></tr>
@@ -307,26 +294,26 @@
         <tr><td id="rowOpties">Gekozen Opties</td><td id="confOpties"></td></tr>
       </table>
 
-      <h4 style="margin-top: 20px;" id="confDierenTitel">Ingeschreven Dieren</h4>
-      <table id="confDierenTable" style="width: 100%; border-collapse: collapse;">
+      <h4 style="margin-top: 15px; margin-bottom: 6px; font-size: 14px; color:#1e3a8a;" id="confDierenTitel">Ingeschreven Dieren</h4>
+      <table id="confDierenTable" class="pdf-table">
         <thead>
-          <tr style="background: #f1f5f9;">
-            <th style="border:1px solid #ddd; padding:6px;">#</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfSoort">Diersoort</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfRas">Ras</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfKleur">Kleur</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfGeslacht">Geslacht</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfLeeftijd">Leeftijd</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfRing">Ring / Tatoe</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfPrijs">Prijs</th>
-            <th style="border:1px solid #ddd; padding:6px;" id="thConfAanduiding">Aanduiding</th>
+          <tr>
+            <th style="width: 25px; text-align: center;">#</th>
+            <th style="width: 80px;" id="thConfSoort">Diersoort</th>
+            <th style="width: 100px;" id="thConfRas">Ras</th>
+            <th style="width: 80px;" id="thConfKleur">Kleur</th>
+            <th style="width: 45px; text-align: center;" id="thConfGeslacht">M/V</th>
+            <th style="width: 45px; text-align: center;" id="thConfLeeftijd">O/J</th>
+            <th style="width: 75px;" id="thConfRing">Ring</th>
+            <th style="width: 55px; text-align: right;" id="thConfPrijs">Prijs</th>
+            <th id="thConfAanduiding">Aand.</th>
           </tr>
         </thead>
         <tbody id="confDierenBody"></tbody>
       </table>
     </div>
 
-    <!-- Knoppen voor PDF & Afdrukken -->
+    <!-- Knoppen -->
     <div class="button-group-conf">
       <button type="button" class="btn btn-success" onclick="downloadDirectePDF()" id="btnDownloadPdf">📥 Download PDF</button>
       <button type="button" class="btn btn-secondary" onclick="window.print()" id="btnPrint">🖨️ Pagina afdrukken</button>
@@ -337,6 +324,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
     let huidigeTaal = 'nl';
+    let ingeschrevenDierenLijst = [];
 
     const copySvgIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
 
@@ -418,13 +406,13 @@
         confTitel: "Inschrijving Succesvol Verzonden!",
         confSub: "Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.",
         confBankTitel: "Belangrijke Betaalinstructies",
-        confBankTekst1: "Om je registratie definitief te voltooien, dien je het exacte totaalbedrag van",
-        confBankTekst2: "vóór <strong>1 november</strong> over te schrijven naar:",
+        confBankTekst1: "Totaalbedrag:",
+        confBankTekst2: "vóór <strong>1 november</strong>",
         lblBegunstigde: "Begunstigde:",
         lblRekening: "Rekeningnummer (IBAN):",
         lblMededeling: "Mededeling:",
         confMededelingTekst: "Inschrijving TT 2026 - ",
-        confInentingTekst: "Vergeet niet om een kopie van je inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
+        confInentingTekst: "Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!",
         confOverzichtTitel: "Overzicht van je Inschrijving",
         confDierenTitel: "Ingeschreven Dieren",
         btnDownloadPdf: "📥 Download PDF",
@@ -507,13 +495,13 @@
         confTitel: "Inscription Envoyée avec Succès!",
         confSub: "Merci pour votre inscription. Nous avons bien reçu vos données.",
         confBankTitel: "Instructions de Paiement Importantes",
-        confBankTekst1: "Pour finaliser définitivement votre inscription, veuillez virer le montant total exact de",
-        confBankTekst2: "avant le <strong>1er novembre</strong> sur le compte suivant:",
+        confBankTekst1: "Montant total:",
+        confBankTekst2: "avant le <strong>1er novembre</strong>",
         lblBegunstigde: "Bénéficiaire:",
         lblRekening: "Numéro de compte (IBAN):",
         lblMededeling: "Communication:",
         confMededelingTekst: "Inscription TT 2026 - ",
-        confInentingTekst: "N'oubliez pas d'envoyer une copie de votre certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
+        confInentingTekst: "Envoyez une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou apportez-le lors de l'encagement!",
         confOverzichtTitel: "Récapitulatif de votre Inscription",
         confDierenTitel: "Animaux Inscrits",
         btnDownloadPdf: "📥 Télécharger PDF",
@@ -687,11 +675,11 @@
       document.getElementById('thConfSoort').innerHTML = t.thSoort.replace(' *', '');
       document.getElementById('thConfRas').innerHTML = t.thRas.replace(' *', '');
       document.getElementById('thConfKleur').innerHTML = t.thKleur;
-      document.getElementById('thConfGeslacht').innerHTML = t.thGeslacht.replace(' *', '');
-      document.getElementById('thConfLeeftijd').innerHTML = t.thLeeftijd.replace(' *', '');
-      document.getElementById('thConfRing').innerHTML = t.thRing;
-      document.getElementById('thConfPrijs').innerHTML = t.thPrijs;
-      document.getElementById('thConfAanduiding').innerHTML = t.thAanduiding;
+      document.getElementById('thConfGeslacht').innerHTML = "M/V";
+      document.getElementById('thConfLeeftijd').innerHTML = "O/J";
+      document.getElementById('thConfRing').innerHTML = "Ring";
+      document.getElementById('thConfPrijs').innerHTML = "Prijs";
+      document.getElementById('thConfAanduiding').innerHTML = "Aand.";
 
       berekenTotaal();
     }
@@ -775,7 +763,6 @@
 
     function verwijderRij(btn) {
       btn.closest('tr').remove();
-      // Indien alles verwijderd wordt, voeg minstens 1 lege rij toe
       if (document.querySelectorAll('#dierenBody tr').length === 0) {
         voegDierRijToe();
       }
@@ -822,17 +809,16 @@
       return totaal;
     }
 
-    // Directe download als PDF via html2pdf
     function downloadDirectePDF() {
       const element = document.getElementById('printArea');
       const deelnemerNaam = document.getElementById('confNaam').textContent.trim() || 'Inschrijving';
       const bestandsNaam = 'Inschrijving_TT2026_' + deelnemerNaam.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf';
       
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: [8, 8, 8, 8],
         filename: bestandsNaam,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
@@ -849,10 +835,7 @@
       });
     });
 
-    // 1. Initialiseer formulier & taal
     wisselTaal('nl');
-
-    // 2. Start standaard met exact 1 rij
     voegDierRijToe();
 
     document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
@@ -946,15 +929,15 @@
           dieren.forEach((d, i) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-              <td data-label="#">${i + 1}</td>
-              <td data-label="${t.thSoort.replace(' *','')}">${d.soort}</td>
-              <td data-label="${t.thRas.replace(' *','')}">${d.ras}</td>
-              <td data-label="${t.thKleur}">${d.kleur || '-'}</td>
-              <td data-label="${t.thGeslacht.replace(' *','')}">${d.geslacht}</td>
-              <td data-label="${t.thLeeftijd.replace(' *','')}">${d.leeftijd}</td>
-              <td data-label="${t.thRing}">${d.ring || '-'}</td>
-              <td data-label="${t.thPrijs}">${d.prijs || '-'}</td>
-              <td data-label="${t.thAanduiding}">${d.aanduiding || '-'}</td>
+              <td style="text-align:center;">${i + 1}</td>
+              <td style="font-weight:bold;">${d.soort}</td>
+              <td>${d.ras}</td>
+              <td>${d.kleur || '-'}</td>
+              <td style="text-align:center;">${d.geslacht}</td>
+              <td style="text-align:center;">${d.leeftijd}</td>
+              <td>${d.ring || '-'}</td>
+              <td style="text-align:right;">${d.prijs ? '€' + d.prijs : '-'}</td>
+              <td>${d.aanduiding || '-'}</td>
             `;
             tbody.appendChild(tr);
           });
