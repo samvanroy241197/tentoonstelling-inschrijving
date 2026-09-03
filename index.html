@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inschrijving Tentoonstelling 2026 - De Pajottenlanders</title>
   
-  <!-- html2pdf.js voor lokale downloads -->
+  <!-- html2pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; max-width: 1080px; margin: 0 auto; padding: 15px; background-color: #f4f6f8; color: #333; line-height: 1.5; }
+    body { font-family: Arial, sans-serif; max-width: 1050px; margin: 0 auto; padding: 15px; background-color: #f4f6f8; color: #333; line-height: 1.5; }
     .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
     h1, h2, h3 { color: #1e3a8a; margin-top: 0; }
     
@@ -20,15 +20,11 @@
 
     .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; margin-bottom: 20px; font-size: 0.95em; border-radius: 0 4px 4px 0; }
     .alert-warning-box { background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 10px 14px; margin-top: 10px; font-size: 0.9em; border-radius: 0 4px 4px 0; display: none; }
-    .tip-box { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 10px 14px; border-radius: 6px; font-size: 0.9em; margin-bottom: 12px; }
     
     .form-group { margin-bottom: 15px; }
     label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em; }
     input[type="text"], input[type="email"], input[type="tel"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; }
-    input[type="file"] { width: 100%; padding: 8px; border: 1px dashed #94a3b8; background: #f8fafc; border-radius: 4px; font-size: 13px; }
     textarea { resize: vertical; min-height: 60px; }
-    .input-error { border-color: #ef4444 !important; background-color: #fff1f2 !important; }
-    .error-label { color: #dc2626; font-size: 0.8em; margin-top: 4px; display: none; font-weight: bold; }
     
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     
@@ -43,19 +39,14 @@
     th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
     th { background: #f8fafc; }
     .th-sub { font-size: 0.75em; font-weight: normal; display: block; color: #666; }
-    .row-nr { font-weight: bold; text-align: center; color: #64748b; }
     
     .btn { background: #1e3a8a; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
     .btn:hover { background: #1e40af; }
     .btn:disabled { background: #94a3b8; cursor: not-allowed; }
     .btn-secondary { background: #64748b; font-size: 14px; padding: 10px 16px; }
     .btn-secondary:hover { background: #475569; }
-    .btn-outline { background: white; border: 1px solid #1e3a8a; color: #1e3a8a; font-size: 14px; padding: 10px 16px; font-weight: bold; border-radius: 5px; cursor: pointer; }
-    .btn-outline:hover { background: #eff6ff; }
     .btn-success { background: #16a34a; font-size: 14px; padding: 10px 16px; }
     .btn-success:hover { background: #15803d; }
-    
-    .table-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
     
     .action-btns { display: flex; gap: 4px; align-items: center; }
     .btn-action { border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; height: 32px; }
@@ -77,6 +68,7 @@
     .summary-table td { padding: 8px 10px; border: 1px solid #e2e8f0; }
     .summary-table td:first-child { font-weight: bold; width: 35%; background: #f8fafc; }
 
+    /* Bevestiging Dieren Tabel Styling */
     .pdf-table { width: 100% !important; border-collapse: collapse !important; margin-top: 10px !important; table-layout: fixed !important; }
     .pdf-table th, .pdf-table td { border: 1px solid #cbd5e1 !important; padding: 6px 4px !important; font-size: 11px !important; word-wrap: break-word !important; text-align: left; }
     .pdf-table th { background-color: #f1f5f9 !important; font-weight: bold; }
@@ -88,7 +80,6 @@
       .card { padding: 15px; }
       .grid-2 { grid-template-columns: 1fr; gap: 0; }
       .btn { width: 100%; }
-      .btn-outline { width: 100%; text-align: center; }
 
       #dierenTabel thead { display: none; }
       #dierenTabel, #dierenTabel tbody, #dierenTabel tr, #dierenTabel td { display: block; width: 100%; }
@@ -133,7 +124,7 @@
     <h3 id="txtSubtitel">Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
     
     <div class="alert-info" id="txtAlertBoven">
-      <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs mee te sturen of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
+      <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
     </div>
 
     <form id="inschrijfForm">
@@ -188,16 +179,8 @@
         </div>
         <div class="form-group">
           <label id="lblBankrekening">Bankrekeningnummer (IBAN): *</label>
-          <input type="text" id="bankrekening" placeholder="bv. BE00 0000 0000 0000" required onblur="valideerIbanVeld(this)">
-          <div id="ibanError" class="error-label">Gelieve een geldig IBAN-nummer in te voeren.</div>
+          <input type="text" id="bankrekening" required>
         </div>
-      </div>
-
-      <!-- Inentingsbewijs uploaden -->
-      <div class="form-group">
-        <label id="lblInentingUpload">Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):</label>
-        <input type="file" id="inentingBestand" accept="application/pdf,image/jpeg,image/png">
-        <small style="color: #64748b; font-size: 0.8em;" id="lblInentingUploadSub">Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.</small>
       </div>
 
       <div class="form-group">
@@ -229,42 +212,30 @@
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
       <h3 id="txtSectie3">3. Dieren Inschrijven (€5,00 per dier)</h3>
-
-      <!-- Tips over PC en Kopiëren -->
-      <div class="tip-box" id="txtTipPc">
-        💡 <strong>Tip voor gebruik:</strong> Het invullen van meerdere dieren gaat vaak vlotter via een computer of tablet dan via een smartphone.
-      </div>
-      <div class="tip-box" style="background:#eff6ff; border-color:#bfdbfe; color:#1e40af;" id="txtTipCopy">
-        📋 <strong>Snel dieren toevoegen?</strong> Heeft u meerdere dieren van hetzelfde ras/kleur? Gebruik de blauwe kopieerknop in de tabel of de knop <em>'+ Kopieer laatste dier'</em> hieronder!
-      </div>
       
       <table id="dierenTabel">
         <thead>
           <tr>
-            <th style="width: 35px; text-align: center;">#</th>
-            <th style="width: 14%;" id="thSoort">Diersoort *</th>
-            <th style="width: 19%;" id="thRas">Ras *</th>
-            <th style="width: 12%;" id="thKleur">Kleur</th>
+            <th style="width: 15%;" id="thSoort">Diersoort *</th>
+            <th style="width: 20%;" id="thRas">Ras *</th>
+            <th style="width: 13%;" id="thKleur">Kleur</th>
             <th style="width: 10%;" id="thGeslacht">Man / Vrouw *</th>
             <th style="width: 10%;" id="thLeeftijd">Oud / Jong *</th>
-            <th style="width: 11%;" id="thRing">Ring / Tatoe</th>
+            <th style="width: 12%;" id="thRing">Ring / Tatoe</th>
             <th style="width: 10%;"><span id="thPrijs">Verkoopprijs</span><span class="th-sub" id="thPrijsSub">leeglaten indien niet te koop</span></th>
             <th style="width: 8%;" id="thAanduiding">Aanduiding</th>
-            <th style="width: 85px;" id="thActie">Kopieer / Verwijder</th>
+            <th style="width: 60px;">Actie</th>
           </tr>
         </thead>
         <tbody id="dierenBody"></tbody>
       </table>
       
-      <div class="table-buttons">
-        <button type="button" class="btn btn-secondary" id="btnAddDier" onclick="voegDierRijToe()">+ Dier toevoegen</button>
-        <button type="button" class="btn-outline" id="btnCopyLaatste" onclick="kopieerLaatsteDier()">+ Kopieer laatste dier</button>
-      </div>
+      <button type="button" class="btn btn-secondary" id="btnAddDier" onclick="voegDierRijToe()" style="margin-top: 10px;">+ Dier toevoegen</button>
 
       <div class="total-box">
         <div><span id="lblAantalDieren">Aantal ingevulde dieren</span>: <span id="aantalDierenTxt">0</span> (€<span id="kostenDierenTxt">0,00</span>)</div>
         <div><span id="lblPalmaresKosten">Verplicht palmares</span>: €7,00</div>
-        <div><span id="lblOptiesKosten">Extra opties</span>: €<span id="kostenOptiesTxt">0,00</span></div>
+        <div><span id="lblOptiesKosten">Extra opties / Lidgeld</span>: €<span id="kostenOptiesTxt">0,00</span></div>
         <hr style="border:none; border-top:1px solid #cbd5e1; margin:8px 0;">
         <div><span id="lblTotaalTeBetalen">Totaal te betalen</span>: <strong>€<span id="totaalBedragTxt">7,00</span></strong></div>
       </div>
@@ -275,7 +246,7 @@
       <div class="form-group">
         <label style="font-weight: normal; display: flex; gap: 10px; align-items: flex-start;">
           <input type="checkbox" required style="width: 20px; height: 20px; margin-top: 2px;"> 
-          <span id="lblAkkoord">Ik ga akkoord met het reglement en geef toestemming voor opslag en verwerking van mijn persoonlijke gegevens door vzw De Pajottenlanders.</span>
+          <span id="lblAkkoord">Ik ga akkoord met het reglement en geef toestemming voor opslag en verwerking van de mijn persoonlijke gegevens door vzw De Pajottenlanders.</span>
         </label>
       </div>
 
@@ -286,7 +257,7 @@
 
       <!-- Disclaimer onderaan -->
       <div class="alert-info" id="txtAlertOnderaan" style="margin-top: 25px; margin-bottom: 0;">
-        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs mee te sturen of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
+        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
       </div>
 
     </form>
@@ -308,7 +279,7 @@
           <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858 (BIC: GEBABEBB)</li>
           <li><strong id="lblMededeling">Mededeling:</strong> <span id="confMededelingTekst">Inschrijving TT 2026 - </span><span id="confNaamMededeling"></span></li>
         </ul>
-        <p style="margin-bottom: 0; font-size: 11px; color: #713f12;"><em id="confInentingTekst">Kopie inentingsbewijs geüpload of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> / meebrengen bij inkooien!</em></p>
+        <p style="margin-bottom: 0; font-size: 11px; color: #713f12;"><em id="confInentingTekst">Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!</em></p>
       </div>
 
       <h3 style="font-size: 15px; color:#1e3a8a; margin-top: 15px; margin-bottom: 6px;" id="confOverzichtTitel">Overzicht van je Inschrijving</h3>
@@ -319,7 +290,6 @@
         <tr><td id="rowContact">E-mail & Telefoon</td><td id="confContact"></td></tr>
         <tr><td id="rowLidVan">Lid van</td><td id="confLidVan"></td></tr>
         <tr><td id="rowIban">Bankrekening</td><td id="confIban"></td></tr>
-        <tr><td id="rowInentingStatus">Inentingsbewijs</td><td id="confInentingStatus"></td></tr>
         <tr><td id="rowOpmerking">Opmerking</td><td id="confOpmerking"></td></tr>
         <tr><td id="rowOpties">Gekozen Opties</td><td id="confOpties"></td></tr>
       </table>
@@ -354,6 +324,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
     let huidigeTaal = 'nl';
+    let ingeschrevenDierenLijst = [];
 
     const copySvgIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
 
@@ -361,7 +332,7 @@
       nl: {
         titel: "De Pajottenlanders vzw",
         subtitel: "Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd",
-        alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs mee te sturen of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
+        alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
         sec1: "1. Persoonlijke Gegevens",
         lblTaalkeuze: "Kies uw taal / Choisissez votre langue:",
         fokkersnr: "Fokkerskaart / Nummer:",
@@ -372,9 +343,6 @@
         telefoon: "Telefoon / GSM: *",
         lidVan: "Lid van vereniging:",
         bankrekening: "Bankrekeningnummer (IBAN): *",
-        ibanFout: "Gelieve een geldig internationaal IBAN-nummer in te voeren.",
-        inentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
-        inentingUploadSub: "Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.",
         opmerking: "Opmerking (Optioneel):",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
         sec2: "2. Opties & Lidgelden",
@@ -393,8 +361,6 @@
         ],
         fokkerFout: "Opgelet: Een fokkersnummer aanvragen kan enkel als u ook lid bent/wordt van De Pajottenlanders. Duid eerst een lidgeld aan.",
         sec3: "3. Dieren Inschrijven (€5,00 per dier)",
-        tipPc: "💡 <strong>Tip voor gebruik:</strong> Het invullen van meerdere dieren gaat vaak vlotter via een computer of tablet dan via een smartphone.",
-        tipCopy: "📋 <strong>Snel dieren toevoegen?</strong> Heeft u meerdere dieren van hetzelfde ras/kleur? Gebruik de blauwe kopieerknop in de tabel of de knop <em>'+ Kopieer laatste dier'</em> hieronder!",
         thSoort: "Diersoort *",
         thRas: "Ras *",
         thKleur: "Kleur",
@@ -404,9 +370,8 @@
         thPrijs: "Verkoopprijs",
         thPrijsSub: "leeglaten indien niet te koop",
         thAanduiding: "Aanduiding",
-        thActie: "Kopieer / Verwijder",
+        thActie: "Actie",
         btnAddDier: "+ Dier toevoegen",
-        btnCopyLaatste: "+ Kopieer laatste dier",
         btnCopyMobile: "Kopieer rij",
         btnDel: "✕",
         btnDelMobile: "Verwijder",
@@ -431,13 +396,12 @@
         ],
         lblAantalDieren: "Aantal ingevulde dieren",
         lblPalmaresKosten: "Verplicht palmares",
-        lblOptiesKosten: "Extra opties",
+        lblOptiesKosten: "Extra opties / Lidgeld",
         lblTotaalTeBetalen: "Totaal te betalen",
         sec4: "4. Bevestiging",
-        akkoord: "Ik ga akkoord met het reglement en geef toestemming voor opslag en verwerking van mijn persoonlijke gegevens door vzw De Pajottenlanders.",
+        akkoord: "Ik ga akkoord met het reglement en geef toestemming voor opslag en verwerking van de mijn persoonlijke gegevens door vzw De Pajottenlanders.",
         btnText: "Inschrijving Verzenden",
         btnSending: "Bezig met verzenden...",
-        geenDierenAlert: "Gelieve minstens 1 dier volledig in te vullen (Diersoort, Ras, M/V en O/J zijn verplicht).",
         valAlert: (idx) => `Gelieve bij dier #${idx} minstens Diersoort, Ras, Man/Vrouw en Oud/Jong in te vullen.`,
         confTitel: "Inschrijving Succesvol Verzonden!",
         confSub: "Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.",
@@ -448,7 +412,7 @@
         lblRekening: "Rekeningnummer (IBAN):",
         lblMededeling: "Mededeling:",
         confMededelingTekst: "Inschrijving TT 2026 - ",
-        confInentingTekst: "Kopie inentingsbewijs geüpload of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> / meebrengen bij inkooien!",
+        confInentingTekst: "Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!",
         confOverzichtTitel: "Overzicht van je Inschrijving",
         confDierenTitel: "Ingeschreven Dieren",
         btnDownloadPdf: "📥 Download PDF",
@@ -468,9 +432,6 @@
         telefoon: "Téléphone / GSM: *",
         lidVan: "Membre de l'association:",
         bankrekening: "Numéro de compte (IBAN): *",
-        ibanFout: "Veuillez saisir un numéro IBAN international valide.",
-        inentingUpload: "Télécharger une copie du certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
-        inentingUploadSub: "Conseil: Si vous téléchargez le fichier maintenant, vous n'avez plus besoin de l'envoyer par e-mail.",
         opmerking: "Remarque (Optionnel):",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
         sec2: "2. Options & Cotisations",
@@ -489,8 +450,6 @@
         ],
         fokkerFout: "Attention: Pour demander un numéro d'éleveur, vous devez être/devenir membre de l'association. Veuillez d'abord choisir une cotisation.",
         sec3: "3. Inscription des Animaux (€5,00 par animal)",
-        tipPc: "💡 <strong>Conseil d'utilisation:</strong> L'inscription de plusieurs animaux est généralement plus rapide sur un ordinateur ou une tablette que sur un smartphone.",
-        tipCopy: "📋 <strong>Ajout rapide:</strong> Vous avez plusieurs animaux de la même race/couleur? Utilisez le bouton bleu copier dans le tableau ou le bouton <em>'+ Copier le dernier animal'</em> ci-dessous!",
         thSoort: "Espèce *",
         thRas: "Race *",
         thKleur: "Couleur",
@@ -500,9 +459,8 @@
         thPrijs: "Prix de vente",
         thPrijsSub: "laisser vide si non à vendre",
         thAanduiding: "Remarque",
-        thActie: "Copier / Supprimer",
+        thActie: "Action",
         btnAddDier: "+ Ajouter un animal",
-        btnCopyLaatste: "+ Copier le dernier animal",
         btnCopyMobile: "Copier la ligne",
         btnDel: "✕",
         btnDelMobile: "Supprimer",
@@ -527,13 +485,12 @@
         ],
         lblAantalDieren: "Nombre d'animaux inscrits",
         lblPalmaresKosten: "Palmarès obligatoire",
-        lblOptiesKosten: "Options supplémentaires",
+        lblOptiesKosten: "Options / Cotisations",
         lblTotaalTeBetalen: "Total à payer",
         sec4: "4. Confirmation",
         akkoord: "J'accepte le règlement et j'autorise le stockage et le traitement de mes données personnelles par l'asbl De Pajottenlanders.",
         btnText: "Envoyer l'inscription",
         btnSending: "Envoi en cours...",
-        geenDierenAlert: "Veuillez inscrire au moins 1 animal complet (Espèce, Race, M/F et V/J sont obligatoires).",
         valAlert: (idx) => `Veuillez remplir au moins Espèce, Race, Mâle/Femelle et Vieux/Jeune pour l'animal #${idx}.`,
         confTitel: "Inscription Envoyée avec Succès!",
         confSub: "Merci pour votre inscription. Nous avons bien reçu vos données.",
@@ -544,52 +501,13 @@
         lblRekening: "Numéro de compte (IBAN):",
         lblMededeling: "Communication:",
         confMededelingTekst: "Inscription TT 2026 - ",
-        confInentingTekst: "Certificat de vaccination téléversé ou à envoyer à <strong>ludwig.van.roy@telenet.be</strong> / apporter lors de l'encagement!",
+        confInentingTekst: "Envoyez une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou apportez-le lors de l'encagement!",
         confOverzichtTitel: "Récapitulatif de votre Inscription",
         confDierenTitel: "Animaux Inscrits",
         btnDownloadPdf: "📥 Télécharger PDF",
         btnPrint: "🖨️ Imprimer la page"
       }
     };
-
-    // Robuuste IBAN Mod-97 Controle
-    function isGeldigeIban(iban) {
-      if (!iban) return false;
-      const clean = iban.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-      if (clean.length < 15 || clean.length > 34) return false;
-      
-      const rearranged = clean.slice(4) + clean.slice(0, 4);
-      let numStr = "";
-      for (let i = 0; i < rearranged.length; i++) {
-        const code = rearranged.charCodeAt(i);
-        if (code >= 65 && code <= 90) {
-          numStr += (code - 55);
-        } else {
-          numStr += rearranged[i];
-        }
-      }
-
-      // Modulo 97 via chunking
-      let remainder = numStr.slice(0, 2);
-      for (let offset = 2; offset < numStr.length; offset += 7) {
-        const chunk = remainder + numStr.substring(offset, offset + 7);
-        remainder = (parseInt(chunk, 10) % 97).toString();
-      }
-      return parseInt(remainder, 10) === 1;
-    }
-
-    function valideerIbanVeld(input) {
-      const err = document.getElementById('ibanError');
-      if (input.value.trim() !== "" && !isGeldigeIban(input.value)) {
-        input.classList.add('input-error');
-        err.style.display = 'block';
-        return false;
-      } else {
-        input.classList.remove('input-error');
-        err.style.display = 'none';
-        return true;
-      }
-    }
 
     function bouwOptiesCheckboxes() {
       const t = vertalingen[huidigeTaal];
@@ -672,13 +590,6 @@
       document.getElementById('fokkerWarning').style.display = 'none';
     }
 
-    function hernummerRijen() {
-      document.querySelectorAll('#dierenBody tr').forEach((row, idx) => {
-        const nrTd = row.querySelector('.row-nr');
-        if (nrTd) nrTd.textContent = idx + 1;
-      });
-    }
-
     function wisselTaal(taal) {
       huidigeTaal = taal;
       const t = vertalingen[taal];
@@ -701,9 +612,6 @@
       document.getElementById('lblLidVan').innerHTML = t.lidVan;
       document.getElementById('lid_van').placeholder = t.optioneel;
       document.getElementById('lblBankrekening').innerHTML = t.bankrekening;
-      document.getElementById('ibanError').innerHTML = t.ibanFout;
-      document.getElementById('lblInentingUpload').innerHTML = t.inentingUpload;
-      document.getElementById('lblInentingUploadSub').innerHTML = t.inentingUploadSub;
       document.getElementById('lblOpmerking').innerHTML = t.opmerking;
       document.getElementById('opmerking').placeholder = t.opmerkingPh;
 
@@ -716,8 +624,6 @@
       bouwOptiesCheckboxes();
 
       document.getElementById('txtSectie3').innerHTML = t.sec3;
-      document.getElementById('txtTipPc').innerHTML = t.tipPc;
-      document.getElementById('txtTipCopy').innerHTML = t.tipCopy;
       document.getElementById('thSoort').innerHTML = t.thSoort;
       document.getElementById('thRas').innerHTML = t.thRas;
       document.getElementById('thKleur').innerHTML = t.thKleur;
@@ -727,9 +633,7 @@
       document.getElementById('thPrijs').innerHTML = t.thPrijs;
       document.getElementById('thPrijsSub').innerHTML = t.thPrijsSub;
       document.getElementById('thAanduiding').innerHTML = t.thAanduiding;
-      document.getElementById('thActie').innerHTML = t.thActie;
       document.getElementById('btnAddDier').innerHTML = t.btnAddDier;
-      document.getElementById('btnCopyLaatste').innerHTML = t.btnCopyLaatste;
 
       document.getElementById('lblAantalDieren').innerHTML = t.lblAantalDieren;
       document.getElementById('lblPalmaresKosten').innerHTML = t.lblPalmaresKosten;
@@ -765,7 +669,6 @@
       document.getElementById('rowContact').innerHTML = (t.email.replace(' *', '') + " & " + t.telefoon.replace(' *', '')).replace(/:/g, '');
       document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
       document.getElementById('rowIban').innerHTML = t.bankrekening.replace(' *', '').replace(':', '');
-      document.getElementById('rowInentingStatus').innerHTML = "Inentingsbewijs";
       document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(' (Optioneel):', '').replace(' (Optionnel):', '');
       document.getElementById('rowOpties').innerHTML = t.lblOptiesKosten;
 
@@ -782,14 +685,14 @@
     }
 
     function updateRijTaal(row, t) {
-      row.children[1].setAttribute('data-label', t.thSoort);
-      row.children[2].setAttribute('data-label', t.thRas);
-      row.children[3].setAttribute('data-label', t.thKleur);
-      row.children[4].setAttribute('data-label', t.thGeslacht);
-      row.children[5].setAttribute('data-label', t.thLeeftijd);
-      row.children[6].setAttribute('data-label', t.thRing);
-      row.children[7].setAttribute('data-label', t.thPrijs);
-      row.children[8].setAttribute('data-label', t.thAanduiding);
+      row.children[0].setAttribute('data-label', t.thSoort);
+      row.children[1].setAttribute('data-label', t.thRas);
+      row.children[2].setAttribute('data-label', t.thKleur);
+      row.children[3].setAttribute('data-label', t.thGeslacht);
+      row.children[4].setAttribute('data-label', t.thLeeftijd);
+      row.children[5].setAttribute('data-label', t.thRing);
+      row.children[6].setAttribute('data-label', t.thPrijs);
+      row.children[7].setAttribute('data-label', t.thAanduiding);
 
       const selectSoort = row.querySelector('.dier-soort');
       const gekozenSoort = selectSoort.value;
@@ -826,7 +729,6 @@
       const tbody = document.getElementById('dierenBody');
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td class="row-nr" data-label="#"></td>
         <td data-label="${t.thSoort}"><select class="dier-soort" onchange="berekenTotaal()"></select></td>
         <td data-label="${t.thRas}"><input type="text" class="dier-ras" placeholder="Ras / Race" oninput="berekenTotaal()"></td>
         <td data-label="${t.thKleur}"><input type="text" class="dier-kleur" placeholder="${t.optioneel}"></td>
@@ -837,8 +739,8 @@
         <td data-label="${t.thAanduiding}"><input type="text" class="dier-aanduiding" placeholder="${t.optioneel}"></td>
         <td class="btn-action-container">
           <div class="action-btns">
-            <button type="button" class="btn-action btn-copy" title="Kopieer dier" onclick="dupliceerRij(this)">${window.innerWidth <= 768 ? t.btnCopyMobile : copySvgIcon}</button>
-            <button type="button" class="btn-action btn-del" title="Verwijder dier" onclick="verwijderRij(this)">${window.innerWidth <= 768 ? t.btnDelMobile : t.btnDel}</button>
+            <button type="button" class="btn-action btn-copy" title="Kopieer rij" onclick="dupliceerRij(this)">${window.innerWidth <= 768 ? t.btnCopyMobile : copySvgIcon}</button>
+            <button type="button" class="btn-action btn-del" title="Verwijder rij" onclick="verwijderRij(this)">${window.innerWidth <= 768 ? t.btnDelMobile : t.btnDel}</button>
           </div>
         </td>
       `;
@@ -856,7 +758,6 @@
         tr.querySelector('.dier-aanduiding').value = '';
       }
 
-      hernummerRijen();
       berekenTotaal();
     }
 
@@ -865,7 +766,6 @@
       if (document.querySelectorAll('#dierenBody tr').length === 0) {
         voegDierRijToe();
       }
-      hernummerRijen();
       berekenTotaal();
     }
 
@@ -879,23 +779,6 @@
         leeftijd: row.querySelector('.dier-leeftijd').value
       };
       voegDierRijToe(data);
-    }
-
-    function kopieerLaatsteDier() {
-      const rows = document.querySelectorAll('#dierenBody tr');
-      if (rows.length > 0) {
-        const lastRow = rows[rows.length - 1];
-        const data = {
-          soort: lastRow.querySelector('.dier-soort').value,
-          ras: lastRow.querySelector('.dier-ras').value,
-          kleur: lastRow.querySelector('.dier-kleur').value,
-          geslacht: lastRow.querySelector('.dier-geslacht').value,
-          leeftijd: lastRow.querySelector('.dier-leeftijd').value
-        };
-        voegDierRijToe(data);
-      } else {
-        voegDierRijToe();
-      }
     }
 
     function berekenTotaal() {
@@ -955,37 +838,10 @@
     wisselTaal('nl');
     voegDierRijToe();
 
-    // Helper om bestand om te zetten naar Base64
-    function leesBestandAlsBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const res = reader.result;
-          const base64Data = res.split(',')[1];
-          resolve({
-            data: base64Data,
-            mimeType: file.type,
-            bestandsnaam: file.name
-          });
-        };
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    document.getElementById('inschrijfForm').addEventListener('submit', async function(e) {
+    document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const t = vertalingen[huidigeTaal];
       
-      // 1. IBAN Controle
-      const ibanInput = document.getElementById('bankrekening');
-      if (!valideerIbanVeld(ibanInput)) {
-        alert(t.ibanFout);
-        ibanInput.focus();
-        return;
-      }
-
-      // 2. Dieren Controle
       const dieren = [];
       let validatieFout = false;
 
@@ -1011,12 +867,6 @@
 
       if (validatieFout) return;
 
-      // Controle: minstens 1 dier
-      if (dieren.length === 0) {
-        alert(t.geenDierenAlert);
-        return;
-      }
-
       const btn = document.getElementById('submitBtn');
       const spinner = document.getElementById('btnSpinner');
       const btnText = document.getElementById('btnText');
@@ -1038,7 +888,7 @@
       const adresVal = document.getElementById('adres').value + ", " + document.getElementById('gemeente').value;
       const contactVal = document.getElementById('email').value + " / " + document.getElementById('telefoon').value;
       const lidVanVal = document.getElementById('lid_van').value || "-";
-      const ibanVal = ibanInput.value.toUpperCase();
+      const ibanVal = document.getElementById('bankrekening').value;
       const opmerkingVal = document.getElementById('opmerking').value || "-";
 
       const formData = new FormData();
@@ -1055,21 +905,6 @@
       formData.append('totaal_bedrag', totaalGeformatteerd);
       formData.append('dierenJSON', JSON.stringify(dieren));
 
-      // Eventueel bestand converteren en toevoegen
-      const fileInput = document.getElementById('inentingBestand');
-      let bestandGeupload = false;
-      if (fileInput.files.length > 0) {
-        try {
-          const fileData = await leesBestandAlsBase64(fileInput.files[0]);
-          formData.append('bestandData', fileData.data);
-          formData.append('bestandMime', fileData.mimeType);
-          formData.append('bestandNaam', fileData.bestandsnaam);
-          bestandGeupload = true;
-        } catch(eBestand) {
-          console.error("Bestand inlezen mislukt", eBestand);
-        }
-      }
-
       function toonBevestigingsScherm() {
         document.getElementById('formulierScherm').style.display = 'none';
         document.getElementById('bevestigingScherm').style.display = 'block';
@@ -1083,27 +918,30 @@
         document.getElementById('confContact').textContent = contactVal;
         document.getElementById('confLidVan').textContent = lidVanVal;
         document.getElementById('confIban').textContent = ibanVal;
-        document.getElementById('confInentingStatus').textContent = bestandGeupload ? "Succesvol opgeladen (gekoppeld)" : "Nog te bezorgen / mailen";
         document.getElementById('confOpmerking').textContent = opmerkingVal;
         document.getElementById('confOpties').textContent = optiesTekst;
 
         const tbody = document.getElementById('confDierenBody');
         tbody.innerHTML = '';
-        dieren.forEach((d, i) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td style="text-align:center;">${i + 1}</td>
-            <td style="font-weight:bold;">${d.soort}</td>
-            <td>${d.ras}</td>
-            <td>${d.kleur || '-'}</td>
-            <td style="text-align:center;">${d.geslacht}</td>
-            <td style="text-align:center;">${d.leeftijd}</td>
-            <td>${d.ring || '-'}</td>
-            <td style="text-align:right;">${d.prijs ? '€' + d.prijs : '-'}</td>
-            <td>${d.aanduiding || '-'}</td>
-          `;
-          tbody.appendChild(tr);
-        });
+        if (dieren.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:10px; color:#666;">-</td></tr>`;
+        } else {
+          dieren.forEach((d, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="text-align:center;">${i + 1}</td>
+              <td style="font-weight:bold;">${d.soort}</td>
+              <td>${d.ras}</td>
+              <td>${d.kleur || '-'}</td>
+              <td style="text-align:center;">${d.geslacht}</td>
+              <td style="text-align:center;">${d.leeftijd}</td>
+              <td>${d.ring || '-'}</td>
+              <td style="text-align:right;">${d.prijs ? '€' + d.prijs : '-'}</td>
+              <td>${d.aanduiding || '-'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
       }
 
       fetch(SCRIPT_URL, {
