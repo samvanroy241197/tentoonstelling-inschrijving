@@ -26,6 +26,9 @@
     input[type="text"], input[type="email"], input[type="tel"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; }
     textarea { resize: vertical; min-height: 60px; }
     
+    .upload-box { border: 1px dashed #94a3b8; padding: 12px; border-radius: 6px; background-color: #f8fafc; margin-top: 5px; }
+    .upload-tip { font-size: 0.85em; color: #64748b; margin-top: 6px; }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     
     .optie-subgroep { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-bottom: 15px; }
@@ -34,7 +37,6 @@
     .checkbox-label { display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer; padding: 6px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px; }
     .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
 
-    /* Desktop Formulier Tabel */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
     th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
     th { background: #f8fafc; }
@@ -68,7 +70,6 @@
     .summary-table td { padding: 8px 10px; border: 1px solid #e2e8f0; }
     .summary-table td:first-child { font-weight: bold; width: 35%; background: #f8fafc; }
 
-    /* Bevestiging Dieren Tabel Styling */
     .pdf-table { width: 100% !important; border-collapse: collapse !important; margin-top: 10px !important; table-layout: fixed !important; }
     .pdf-table th, .pdf-table td { border: 1px solid #cbd5e1 !important; padding: 6px 4px !important; font-size: 11px !important; word-wrap: break-word !important; text-align: left; }
     .pdf-table th { background-color: #f1f5f9 !important; font-weight: bold; }
@@ -118,13 +119,12 @@
 </head>
 <body>
 
-  <!-- INSCHRIJFFORMULIER -->
   <div class="card" id="formulierScherm">
     <h1 id="txtTitel">De Pajottenlanders vzw</h1>
     <h3 id="txtSubtitel">Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
     
     <div class="alert-info" id="txtAlertBoven">
-      <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
+      <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te uploaden, te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
     </div>
 
     <form id="inschrijfForm">
@@ -186,6 +186,15 @@
       <div class="form-group">
         <label id="lblOpmerking">Opmerking (Optioneel):</label>
         <textarea id="opmerking" placeholder="Eventuele opmerkingen of speciale wensen..."></textarea>
+      </div>
+
+      <!-- Bestandsupload Inentingsbewijs -->
+      <div class="form-group">
+        <label id="lblInentingUpload">Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):</label>
+        <div class="upload-box">
+          <input type="file" id="inentingBestand" accept="image/*,application/pdf">
+          <div class="upload-tip" id="lblInentingTip">Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.</div>
+        </div>
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
@@ -255,9 +264,8 @@
         <span id="btnText">Inschrijving Verzenden</span>
       </button>
 
-      <!-- Disclaimer onderaan -->
       <div class="alert-info" id="txtAlertOnderaan" style="margin-top: 25px; margin-bottom: 0;">
-        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
+        <strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te uploaden, te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!
       </div>
 
     </form>
@@ -279,7 +287,7 @@
           <li><strong id="lblRekening">Rekeningnummer (IBAN):</strong> BE95 2930 0208 5858 (BIC: GEBABEBB)</li>
           <li><strong id="lblMededeling">Mededeling:</strong> <span id="confMededelingTekst">Inschrijving TT 2026 - </span><span id="confNaamMededeling"></span></li>
         </ul>
-        <p style="margin-bottom: 0; font-size: 11px; color: #713f12;"><em id="confInentingTekst">Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!</em></p>
+        <p style="margin-bottom: 0; font-size: 11px; color: #713f12;"><em id="confInentingTekst">Kopie inentingsbewijs geüpload of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> (of meebrengen bij inkooien)!</em></p>
       </div>
 
       <h3 style="font-size: 15px; color:#1e3a8a; margin-top: 15px; margin-bottom: 6px;" id="confOverzichtTitel">Overzicht van je Inschrijving</h3>
@@ -291,6 +299,7 @@
         <tr><td id="rowLidVan">Lid van</td><td id="confLidVan"></td></tr>
         <tr><td id="rowIban">Bankrekening</td><td id="confIban"></td></tr>
         <tr><td id="rowOpmerking">Opmerking</td><td id="confOpmerking"></td></tr>
+        <tr><td id="rowInenting">Inentingsbewijs</td><td id="confInenting"></td></tr>
         <tr><td id="rowOpties">Gekozen Opties</td><td id="confOpties"></td></tr>
       </table>
 
@@ -313,7 +322,6 @@
       </table>
     </div>
 
-    <!-- Knoppen -->
     <div class="button-group-conf">
       <button type="button" class="btn btn-success" onclick="downloadDirectePDF()" id="btnDownloadPdf">📥 Download PDF</button>
       <button type="button" class="btn btn-secondary" onclick="window.print()" id="btnPrint">🖨️ Pagina afdrukken</button>
@@ -324,7 +332,6 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
     let huidigeTaal = 'nl';
-    let ingeschrevenDierenLijst = [];
 
     const copySvgIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
 
@@ -332,7 +339,7 @@
       nl: {
         titel: "De Pajottenlanders vzw",
         subtitel: "Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd",
-        alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
+        alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te uploaden, te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
         sec1: "1. Persoonlijke Gegevens",
         lblTaalkeuze: "Kies uw taal / Choisissez votre langue:",
         fokkersnr: "Fokkerskaart / Nummer:",
@@ -345,6 +352,8 @@
         bankrekening: "Bankrekeningnummer (IBAN): *",
         opmerking: "Opmerking (Optioneel):",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
+        lblInentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
+        lblInentingTip: "Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.",
         sec2: "2. Opties & Lidgelden",
         palmares: "Verplicht palmares:",
         palmaresVal: "7,00 EUR (1 per gezin verplicht)",
@@ -412,7 +421,7 @@
         lblRekening: "Rekeningnummer (IBAN):",
         lblMededeling: "Mededeling:",
         confMededelingTekst: "Inschrijving TT 2026 - ",
-        confInentingTekst: "Kopie inentingsbewijs mailen naar <strong>ludwig.van.roy@telenet.be</strong> of meebrengen bij inkooien!",
+        confInentingTekst: "Kopie inentingsbewijs geüpload of te mailen naar <strong>ludwig.van.roy@telenet.be</strong> (of meebrengen bij inkooien)!",
         confOverzichtTitel: "Overzicht van je Inschrijving",
         confDierenTitel: "Ingeschreven Dieren",
         btnDownloadPdf: "📥 Download PDF",
@@ -421,7 +430,7 @@
       fr: {
         titel: "De Pajottenlanders asbl",
         subtitel: "Formulaire d'inscription 2026 - Exposition / Concours provincial",
-        alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient définitive qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas d'envoyer une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
+        alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient définitive qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas de télécharger une copie du certificat de vaccination, de l'envoyer à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
         sec1: "1. Coordonnées Personnelles",
         lblTaalkeuze: "Choisissez votre langue / Kies uw taal:",
         fokkersnr: "Carte / Numéro d'éleveur:",
@@ -434,6 +443,8 @@
         bankrekening: "Numéro de compte (IBAN): *",
         opmerking: "Remarque (Optionnel):",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
+        lblInentingUpload: "Téléverser le certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
+        lblInentingTip: "Astuce: si vous téléversez le fichier maintenant, vous n'avez plus besoin de l'envoyer par e-mail.",
         sec2: "2. Options & Cotisations",
         palmares: "Palmarès obligatoire:",
         palmaresVal: "7,00 EUR (1 par famille obligatoire)",
@@ -501,7 +512,7 @@
         lblRekening: "Numéro de compte (IBAN):",
         lblMededeling: "Communication:",
         confMededelingTekst: "Inscription TT 2026 - ",
-        confInentingTekst: "Envoyez une copie du certificat de vaccination à <strong>ludwig.van.roy@telenet.be</strong> ou apportez-le lors de l'encagement!",
+        confInentingTekst: "Certificat de vaccination téléversé ou à envoyer à <strong>ludwig.van.roy@telenet.be</strong> (ou à apporter lors de l'encagement)!",
         confOverzichtTitel: "Récapitulatif de votre Inscription",
         confDierenTitel: "Animaux Inscrits",
         btnDownloadPdf: "📥 Télécharger PDF",
@@ -614,6 +625,8 @@
       document.getElementById('lblBankrekening').innerHTML = t.bankrekening;
       document.getElementById('lblOpmerking').innerHTML = t.opmerking;
       document.getElementById('opmerking').placeholder = t.opmerkingPh;
+      document.getElementById('lblInentingUpload').innerHTML = t.lblInentingUpload;
+      document.getElementById('lblInentingTip').innerHTML = t.lblInentingTip;
 
       document.getElementById('txtSectie2').innerHTML = t.sec2;
       document.getElementById('lblPalmares').innerHTML = t.palmares;
@@ -670,6 +683,7 @@
       document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
       document.getElementById('rowIban').innerHTML = t.bankrekening.replace(' *', '').replace(':', '');
       document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(' (Optioneel):', '').replace(' (Optionnel):', '');
+      document.getElementById('rowInenting').innerHTML = "Inentingsbewijs";
       document.getElementById('rowOpties').innerHTML = t.lblOptiesKosten;
 
       document.getElementById('thConfSoort').innerHTML = t.thSoort.replace(' *', '');
@@ -838,7 +852,7 @@
     wisselTaal('nl');
     voegDierRijToe();
 
-    document.getElementById('inschrijfForm').addEventListener('submit', function(e) {
+    document.getElementById('inschrijfForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const t = vertalingen[huidigeTaal];
       
@@ -874,6 +888,23 @@
       spinner.style.display = 'inline-block';
       btnText.textContent = t.btnSending;
 
+      // Inentingsbewijs bestand inlezen
+      const fileInput = document.getElementById('inentingBestand');
+      let fileBase64 = "";
+      let fileName = "";
+      let fileType = "";
+
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileName = file.name;
+        fileType = file.type;
+        fileBase64 = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.readAsDataURL(file);
+        });
+      }
+
       const gekozenOpties = [];
       document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         gekozenOpties.push(cb.getAttribute('data-label'));
@@ -904,6 +935,9 @@
       formData.append('optie_lidgeld', optiesTekst);
       formData.append('totaal_bedrag', totaalGeformatteerd);
       formData.append('dierenJSON', JSON.stringify(dieren));
+      formData.append('fileBase64', fileBase64);
+      formData.append('fileName', fileName);
+      formData.append('fileType', fileType);
 
       function toonBevestigingsScherm() {
         document.getElementById('formulierScherm').style.display = 'none';
@@ -919,6 +953,7 @@
         document.getElementById('confLidVan').textContent = lidVanVal;
         document.getElementById('confIban').textContent = ibanVal;
         document.getElementById('confOpmerking').textContent = opmerkingVal;
+        document.getElementById('confInenting').textContent = fileName ? `Geüpload: ${fileName}` : "Niet toegevoegd (mailen of meebrengen)";
         document.getElementById('confOpties').textContent = optiesTekst;
 
         const tbody = document.getElementById('confDierenBody');
