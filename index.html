@@ -14,6 +14,18 @@
     .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
     h1, h2, h3 { color: #1e3a8a; margin-top: 0; }
     
+    /* Meldbalk mobiel advies */
+    .mobile-tip-banner {
+      display: none;
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      color: #92400e;
+      padding: 12px 16px;
+      margin-bottom: 15px;
+      font-size: 0.9em;
+      border-radius: 0 4px 4px 0;
+    }
+
     .lang-container { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 15px 0 20px 0; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
     .lang-btn { padding: 6px 14px; border: 1px solid #cbd5e1; background: white; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px; color: #475569; }
     .lang-btn.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
@@ -76,9 +88,11 @@
 
     .button-group-conf { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
 
+    /* Mobiele Layout */
     @media (max-width: 768px) {
       body { padding: 8px; }
       .card { padding: 15px; }
+      .mobile-tip-banner { display: block; }
       .grid-2 { grid-template-columns: 1fr; gap: 0; }
       .btn { width: 100%; }
 
@@ -103,23 +117,33 @@
       .btn-action-container {
         display: flex;
         gap: 10px;
-        padding-top: 8px !important;
+        padding-top: 10px !important;
         border-top: 1px dashed #cbd5e1 !important;
         margin-top: 8px;
       }
-      .btn-action-container .btn-action { flex: 1; padding: 10px; text-align: center; }
+      .btn-action-container .btn-action {
+        flex: 1;
+        height: 38px;
+        font-size: 14px;
+      }
     }
 
     @media print {
       body { background: white; padding: 0; }
       .card { box-shadow: none; border: none; padding: 0; }
-      .button-group-conf, .lang-container { display: none !important; }
+      .button-group-conf, .lang-container, .mobile-tip-banner { display: none !important; }
     }
   </style>
 </head>
 <body>
 
   <div class="card" id="formulierScherm">
+    
+    <!-- Mobiele tip banner -->
+    <div class="mobile-tip-banner" id="txtMobileBanner">
+      <strong>Tip voor smartphone-gebruikers:</strong> Schrijft u meerdere dieren in? Wij raden aan om dit formulier op een computer of tablet in te vullen voor meer comfort en overzicht.
+    </div>
+
     <h1 id="txtTitel">De Pajottenlanders vzw</h1>
     <h3 id="txtSubtitel">Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd</h3>
     
@@ -188,12 +212,11 @@
         <textarea id="opmerking" placeholder="Eventuele opmerkingen of speciale wensen..."></textarea>
       </div>
 
-      <!-- Bestandsupload Inentingsbewijs -->
       <div class="form-group">
         <label id="lblInentingUpload">Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):</label>
         <div class="upload-box">
-          <input type="file" id="inentingBestand" accept="image/*,application/pdf">
-          <div class="upload-tip" id="lblInentingTip">Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.</div>
+          <input type="file" id="inentingBestand" accept="image/*,application/pdf" multiple>
+          <div class="upload-tip" id="lblInentingTip">Tip: U kunt meerdere bestanden selecteren. Indien u nu oplaadt, hoeft u deze niet meer apart te mailen.</div>
         </div>
       </div>
 
@@ -205,13 +228,11 @@
         <input type="text" id="valPalmares" value="7,00 EUR (1 per gezin verplicht)" disabled>
       </div>
 
-      <!-- Groep 1: Lidgeld 2027 -->
       <div class="optie-subgroep">
         <div class="optie-subgroep-titel" id="lblGroepLidgeld">Lidgeld De Pajottenlanders (2027)</div>
         <div class="checkbox-group" id="containerLidgeld"></div>
       </div>
 
-      <!-- Groep 2: Fokkersnummer 2027 -->
       <div class="optie-subgroep">
         <div class="optie-subgroep-titel" id="lblGroepFokker">Fokkersnummer aanvragen (Seizoen 2027)</div>
         <div class="checkbox-group" id="containerFokkersnummer"></div>
@@ -233,7 +254,7 @@
             <th style="width: 12%;" id="thRing">Ring / Tatoe</th>
             <th style="width: 10%;"><span id="thPrijs">Verkoopprijs</span><span class="th-sub" id="thPrijsSub">leeglaten indien niet te koop</span></th>
             <th style="width: 8%;" id="thAanduiding">Aanduiding</th>
-            <th style="width: 60px;">Actie</th>
+            <th style="width: 75px;">Actie</th>
           </tr>
         </thead>
         <tbody id="dierenBody"></tbody>
@@ -337,6 +358,7 @@
 
     const vertalingen = {
       nl: {
+        mobileBanner: "<strong>Tip voor smartphone-gebruikers:</strong> Schrijft u meerdere dieren in? Wij raden aan om dit formulier op een computer of tablet in te vullen voor meer comfort en overzicht.",
         titel: "De Pajottenlanders vzw",
         subtitel: "Inschrijvingsformulier 2026 - Tentoonstelling / Provinciale wedstrijd",
         alert: "<strong>Let op:</strong> Inschrijven vóór <strong>30/10/2026</strong>. Inschrijving wordt pas definitief na ontvangst van het inschrijvingsgeld vóór <strong>1/11</strong>. Vergeet niet een kopie van het inentingsbewijs te uploaden, te mailen naar <strong>ludwig.van.roy@telenet.be</strong> of ten laatste mee te brengen tijdens het inkooien van de dieren!",
@@ -353,7 +375,7 @@
         opmerking: "Opmerking (Optioneel):",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
         lblInentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
-        lblInentingTip: "Tip: Indien u het bestand nu oplaadt, hoeft u het niet meer afzonderlijk te mailen.",
+        lblInentingTip: "Tip: U kunt meerdere bestanden selecteren. Indien u nu oplaadt, hoeft u deze niet meer apart te mailen.",
         sec2: "2. Opties & Lidgelden",
         palmares: "Verplicht palmares:",
         palmaresVal: "7,00 EUR (1 per gezin verplicht)",
@@ -381,9 +403,9 @@
         thAanduiding: "Aanduiding",
         thActie: "Actie",
         btnAddDier: "+ Dier toevoegen",
-        btnCopyMobile: "Kopieer rij",
+        btnCopyMobile: "📋 Kopieer rij",
         btnDel: "✕",
-        btnDelMobile: "Verwijder",
+        btnDelMobile: "✕ Verwijder",
         kies: "-- Kies --",
         optioneel: "Optioneel",
         soorten: [
@@ -428,6 +450,7 @@
         btnPrint: "🖨️ Pagina afdrukken"
       },
       fr: {
+        mobileBanner: "<strong>Conseil smartphone:</strong> Vous inscrivez plusieurs animaux? Nous vous conseillons d'utiliser un ordinateur ou une tablette pour plus de confort.",
         titel: "De Pajottenlanders asbl",
         subtitel: "Formulaire d'inscription 2026 - Exposition / Concours provincial",
         alert: "<strong>Attention:</strong> Inscription avant le <strong>30/10/2026</strong>. L'inscription ne devient définitive qu'après réception des frais d'inscription avant le <strong>01/11</strong>. N'oubliez pas de télécharger une copie du certificat de vaccination, de l'envoyer à <strong>ludwig.van.roy@telenet.be</strong> ou de l'apporter lors de l'encagement des animaux!",
@@ -444,7 +467,7 @@
         opmerking: "Remarque (Optionnel):",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
         lblInentingUpload: "Téléverser le certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
-        lblInentingTip: "Astuce: si vous téléversez le fichier maintenant, vous n'avez plus besoin de l'envoyer par e-mail.",
+        lblInentingTip: "Astuce: vous pouvez choisir plusieurs fichiers. En les téléversant ici, vous n'avez plus besoin de les envoyer par mail.",
         sec2: "2. Options & Cotisations",
         palmares: "Palmarès obligatoire:",
         palmaresVal: "7,00 EUR (1 par famille obligatoire)",
@@ -472,9 +495,9 @@
         thAanduiding: "Remarque",
         thActie: "Action",
         btnAddDier: "+ Ajouter un animal",
-        btnCopyMobile: "Copier la ligne",
+        btnCopyMobile: "📋 Copier la ligne",
         btnDel: "✕",
-        btnDelMobile: "Supprimer",
+        btnDelMobile: "✕ Supprimer",
         kies: "-- Choisir --",
         optioneel: "Optionnel",
         soorten: [
@@ -608,6 +631,7 @@
       document.getElementById('btnNL').classList.toggle('active', taal === 'nl');
       document.getElementById('btnFR').classList.toggle('active', taal === 'fr');
 
+      document.getElementById('txtMobileBanner').innerHTML = t.mobileBanner;
       document.getElementById('txtTitel').innerHTML = t.titel;
       document.getElementById('txtSubtitel').innerHTML = t.subtitel;
       document.getElementById('txtAlertBoven').innerHTML = t.alert;
@@ -888,21 +912,24 @@
       spinner.style.display = 'inline-block';
       btnText.textContent = t.btnSending;
 
-      // Inentingsbewijs bestand inlezen
+      // Meerdere bestanden inlezen
       const fileInput = document.getElementById('inentingBestand');
-      let fileBase64 = "";
-      let fileName = "";
-      let fileType = "";
+      const filesArray = [];
 
       if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        fileName = file.name;
-        fileType = file.type;
-        fileBase64 = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result.split(',')[1]);
-          reader.readAsDataURL(file);
-        });
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          const base64Data = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.readAsDataURL(file);
+          });
+          filesArray.push({
+            name: file.name,
+            type: file.type,
+            base64: base64Data
+          });
+        }
       }
 
       const gekozenOpties = [];
@@ -935,9 +962,7 @@
       formData.append('optie_lidgeld', optiesTekst);
       formData.append('totaal_bedrag', totaalGeformatteerd);
       formData.append('dierenJSON', JSON.stringify(dieren));
-      formData.append('fileBase64', fileBase64);
-      formData.append('fileName', fileName);
-      formData.append('fileType', fileType);
+      formData.append('filesJSON', JSON.stringify(filesArray));
 
       function toonBevestigingsScherm() {
         document.getElementById('formulierScherm').style.display = 'none';
@@ -953,7 +978,14 @@
         document.getElementById('confLidVan').textContent = lidVanVal;
         document.getElementById('confIban').textContent = ibanVal;
         document.getElementById('confOpmerking').textContent = opmerkingVal;
-        document.getElementById('confInenting').textContent = fileName ? `Geüpload: ${fileName}` : "Niet toegevoegd (mailen of meebrengen)";
+        
+        let inentingText = "Niet toegevoegd (mailen of meebrengen)";
+        if (filesArray.length === 1) {
+          inentingText = `Geüpload: ${filesArray[0].name}`;
+        } else if (filesArray.length > 1) {
+          inentingText = `Geüpload (${filesArray.length} bestanden): ` + filesArray.map(f => f.name).join(', ');
+        }
+        document.getElementById('confInenting').textContent = inentingText;
         document.getElementById('confOpties').textContent = optiesTekst;
 
         const tbody = document.getElementById('confDierenBody');
