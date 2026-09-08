@@ -93,6 +93,73 @@
 
     .button-group-conf { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
 
+    /* Custom Site Modal */
+    .custom-modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .custom-modal-card {
+      background: white;
+      border-radius: 10px;
+      max-width: 440px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .custom-modal-icon {
+      width: 50px;
+      height: 50px;
+      background: #fee2e2;
+      color: #dc2626;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px auto;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .custom-modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .custom-modal-body {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .custom-modal-btn {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+    .custom-modal-btn:hover { background: #1e40af; }
+
     /* Mobiele Layout */
     @media (max-width: 768px) {
       body { padding: 8px; }
@@ -145,11 +212,21 @@
     @media print {
       body { background: white; padding: 0; }
       .card { box-shadow: none; border: none; padding: 0; }
-      .button-group-conf, .lang-container, .mobile-tip-banner { display: none !important; }
+      .button-group-conf, .lang-container, .mobile-tip-banner, .custom-modal-backdrop { display: none !important; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Custom Site Modal -->
+  <div id="customModal" class="custom-modal-backdrop">
+    <div class="custom-modal-card">
+      <div class="custom-modal-icon">!</div>
+      <div class="custom-modal-title" id="modalTitle">Opgelet</div>
+      <div class="custom-modal-body" id="modalMsg">Meldingstekst</div>
+      <button type="button" class="custom-modal-btn" id="modalBtn" onclick="sluitModal()">Begrepen</button>
+    </div>
+  </div>
 
   <div class="card" id="formulierScherm">
     
@@ -373,6 +450,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBtVDJJ5T2fwW1T91ru_Fsy8ypCyF24caqJLHpBv7e3rbx0I3oVxPC12OT2aAKB5Y-Dg/exec";
 
     let huidigeTaal = 'nl';
+    let modalCallback = null;
 
     const copySvgIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
 
@@ -455,9 +533,11 @@
         akkoord: "Ik ga akkoord met het reglement en geef toestemming voor opslag en verwerking van mijn persoonlijke gegevens door vzw De Pajottenlanders.",
         btnText: "Inschrijving Verzenden",
         btnSending: "Bezig met verzenden...",
+        modalTitle: "Controleer uw gegevens",
+        modalBtnText: "Begrepen",
         valAlertGeenDieren: "U moet minstens 1 dier volledig inschrijven om het formulier te kunnen verzenden.",
         valAlert: (idx) => `Gelieve bij dier #${idx} minstens Diersoort, Ras, Man/Vrouw en Oud/Jong in te vullen.`,
-        valIbanFout: "Gelieve een geldig bankrekeningnummer (IBAN) in te vullen zonder ongeldige tekst.",
+        valIbanFout: "Gelieve een geldig bankrekeningnummer (IBAN) in te vullen zonder ongeldige tekens.",
         confTitel: "Inschrijving Succesvol Verzonden!",
         confSub: "Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.",
         confBankTitel: "Belangrijke Betaalinstructies",
@@ -551,9 +631,11 @@
         akkoord: "J'accepte le règlement et j'autorise le stockage et le traitement de mes données personnelles par l'asbl De Pajottenlanders.",
         btnText: "Envoyer l'inscription",
         btnSending: "Envoi en cours...",
+        modalTitle: "Vérifiez vos données",
+        modalBtnText: "Compris",
         valAlertGeenDieren: "Vous devez inscrire au moins 1 animal complet avant de soumettre.",
         valAlert: (idx) => `Veuillez remplir au moins Espèce, Race, Mâle/Femelle et Vieux/Jeune pour l'animal #${idx}.`,
-        valIbanFout: "Veuillez entrer un numéro de compte (IBAN) valide sans texte superflu.",
+        valIbanFout: "Veuillez entrer un numéro de compte (IBAN) valide sans caractères invalides.",
         confTitel: "Inscription Envoyée avec Succès!",
         confSub: "Merci pour votre inscription. Nous avons bien reçu vos données.",
         confBankTitel: "Instructions de Paiement Importantes",
@@ -571,15 +653,41 @@
       }
     };
 
+    // Nette Custom Modal functies
+    function toonModal(boodschap, callback = null) {
+      const t = vertalingen[huidigeTaal];
+      document.getElementById('modalTitle').textContent = t.modalTitle;
+      document.getElementById('modalMsg').innerHTML = boodschap;
+      document.getElementById('modalBtn').textContent = t.modalBtnText;
+      modalCallback = callback;
+      
+      const modal = document.getElementById('customModal');
+      modal.style.display = 'flex';
+    }
+
+    function sluitModal() {
+      document.getElementById('customModal').style.display = 'none';
+      if (modalCallback) {
+        modalCallback();
+        modalCallback = null;
+      }
+    }
+
+    // Sluit modal bij klik buiten de kaart
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('customModal');
+      if (e.target === modal) {
+        sluitModal();
+      }
+    });
+
     // Bankrekening controle: IBAN formaat + modulo 97 checksum
     function valideerIBAN(iban) {
       if (!iban) return false;
       const schoon = iban.replace(/[\s.-]/g, '').toUpperCase();
       
-      // Controleer op ongeldige tekens
       if (!/^[A-Z0-9]+$/.test(schoon)) return false;
 
-      // Volledige IBAN controle (minimaal 14 tot 34 tekens, beginnend met 2 landletters)
       const ibanRegex = /^[A-Z]{2}[0-9]{2}[A-Z0-9]{10,30}$/;
       if (ibanRegex.test(schoon)) {
         const hussle = schoon.slice(4) + schoon.slice(0, 4);
@@ -596,7 +704,6 @@
         return rest === 1;
       }
 
-      // Ouder nationaal Belgisch formaat fallback (12 cijfers)
       if (/^[0-9]{12}$/.test(schoon)) {
         const eerste10 = parseInt(schoon.substring(0, 10), 10);
         const laatste2 = parseInt(schoon.substring(10, 12), 10);
@@ -975,17 +1082,19 @@
       e.preventDefault();
       const t = vertalingen[huidigeTaal];
       
-      // 1. Bankrekening validatie
+      // 1. Bankrekening validatie met custom in-site modal
       const ibanInvoer = document.getElementById('bankrekening').value.trim();
       if (!valideerIBAN(ibanInvoer)) {
-        alert(t.valIbanFout);
-        document.getElementById('bankrekening').focus();
+        toonModal(t.valIbanFout, () => {
+          document.getElementById('bankrekening').focus();
+        });
         return;
       }
 
-      // 2. Dieren validatie
+      // 2. Dieren validatie met custom in-site modal
       const dieren = [];
       let validatieFout = false;
+      let foutMelding = "";
 
       document.querySelectorAll('#dierenBody tr').forEach((row, index) => {
         const soort = row.querySelector('.dier-soort').value;
@@ -1000,17 +1109,20 @@
         if (soort !== "" || ras !== "" || kleur !== "" || leeftijd !== "" || geslacht !== "" || ring !== "" || prijs !== "" || aanduiding !== "") {
           if (!soort || !ras || !geslacht || !leeftijd) {
             validatieFout = true;
-            alert(t.valAlert(index + 1));
+            foutMelding = t.valAlert(index + 1);
           } else {
             dieren.push({ soort, ras, kleur, geslacht, leeftijd, ring, prijs, aanduiding });
           }
         }
       });
 
-      if (validatieFout) return;
+      if (validatieFout) {
+        toonModal(foutMelding);
+        return;
+      }
 
       if (dieren.length === 0) {
-        alert(t.valAlertGeenDieren);
+        toonModal(t.valAlertGeenDieren);
         return;
       }
 
