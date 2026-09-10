@@ -292,8 +292,8 @@
           <input type="text" id="lid_van" placeholder="Optioneel">
         </div>
         <div class="form-group">
-          <label id="lblBankrekening">Bankrekeningnummer (IBAN): *</label>
-          <input type="text" id="bankrekening" placeholder="bv. BE68 5390 0754 7034 of NL91 ABNA 0417 1643 00" required>
+          <label id="lblBankrekening">Bankrekeningnummer (IBAN - Optioneel):</label>
+          <input type="text" id="bankrekening" placeholder="bv. BE68 5390 0754 7034 of NL91 ABNA 0417 1643 00">
         </div>
       </div>
 
@@ -313,9 +313,18 @@
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
       <h3 id="txtSectie2">2. Opties & Lidgelden</h3>
-      <div class="form-group">
-        <label id="lblPalmares">Verplicht palmares:</label>
-        <input type="text" id="valPalmares" value="7,00 EUR (1 per gezin verplicht)" disabled>
+      <div class="alert-info" id="txtOptieVerplichtTip" style="margin-bottom: 15px;">
+        📌 <strong>Opmerking:</strong> Minstens 1 van de opties (Palmares óf een Lidgeld) is per gezin verplicht.
+      </div>
+
+      <!-- Palmares Optie (Aan/uitvinkbaar) -->
+      <div class="optie-subgroep">
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="optie_palmares" checked data-prijs="7" onchange="berekenTotaal()">
+            <span id="lblPalmaresTekst"><strong>Palmares 2026</strong> (€7,00)</span>
+          </label>
+        </div>
       </div>
 
       <div class="optie-subgroep">
@@ -361,10 +370,9 @@
 
       <div class="total-box">
         <div><span id="lblAantalDieren">Aantal ingevulde dieren</span>: <span id="aantalDierenTxt">0</span> (€<span id="kostenDierenTxt">0,00</span>)</div>
-        <div><span id="lblPalmaresKosten">Verplicht palmares</span>: €7,00</div>
         <div><span id="lblOptiesKosten">Extra opties</span>: €<span id="kostenOptiesTxt">0,00</span></div>
         <hr style="border:none; border-top:1px solid #cbd5e1; margin:8px 0;">
-        <div><span id="lblTotaalTeBetalen">Totaal te betalen</span>: <strong>€<span id="totaalBedragTxt">7,00</span></strong></div>
+        <div><span id="lblTotaalTeBetalen">Totaal te betalen</span>: <strong>€<span id="totaalBedragTxt">0,00</span></strong></div>
       </div>
 
       <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
@@ -469,14 +477,14 @@
         email: "E-mailadres: *",
         telefoon: "Telefoon / GSM: *",
         lidVan: "Lid van vereniging:",
-        bankrekening: "Bankrekeningnummer (IBAN): *",
+        bankrekening: "Bankrekeningnummer (IBAN - Optioneel):",
         opmerking: "Opmerking (Optioneel):",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
         lblInentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
         lblInentingTip: "Tip: U kunt meerdere bestanden selecteren. Indien u nu oplaadt, hoeft u deze niet meer apart te mailen.",
         sec2: "2. Opties & Lidgelden",
-        palmares: "Verplicht palmares:",
-        palmaresVal: "7,00 EUR (1 per gezin verplicht)",
+        optieVerplichtTip: "📌 <strong>Opmerking:</strong> Minstens 1 van de opties (Palmares óf een Lidgeld) is per gezin verplicht.",
+        lblPalmaresTekst: "<strong>Palmares 2026</strong> (€7,00)",
         lblGroepLidgeld: "Lidgeld De Pajottenlanders (2027)",
         lidgeldOpties: [
           { id: "lid_papieren", prijs: 15, label: "Lidgeld 2027 met papieren clubblad (€15,00)" },
@@ -526,7 +534,6 @@
           { val: "Vrouw", label: "Vrouw" }
         ],
         lblAantalDieren: "Aantal ingevulde dieren",
-        lblPalmaresKosten: "Verplicht palmares",
         lblOptiesKosten: "Extra opties",
         lblTotaalTeBetalen: "Totaal te betalen",
         sec4: "4. Bevestiging",
@@ -537,7 +544,7 @@
         modalBtnText: "Begrepen",
         valAlertGeenDieren: "U moet minstens 1 dier volledig inschrijven om het formulier te kunnen verzenden.",
         valAlert: (idx) => `Gelieve bij dier #${idx} minstens Diersoort, Ras, Man/Vrouw en Oud/Jong in te vullen.`,
-        valIbanFout: "Gelieve een geldig bankrekeningnummer (IBAN) in te vullen zonder ongeldige tekens.",
+        valIbanFout: "Het ingevulde bankrekeningnummer (IBAN) is niet geldig. Gelieve het te corrigeren of het veld leeg te laten.",
         confTitel: "Inschrijving Succesvol Verzonden!",
         confSub: "Bedankt voor je inschrijving. Wij hebben je gegevens goed ontvangen.",
         confBankTitel: "Belangrijke Betaalinstructies",
@@ -567,14 +574,14 @@
         email: "Adresse e-mail: *",
         telefoon: "Téléphone / GSM: *",
         lidVan: "Membre de l'association:",
-        bankrekening: "Numéro de compte (IBAN): *",
+        bankrekening: "Numéro de compte (IBAN - Optionnel):",
         opmerking: "Remarque (Optionnel):",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
         lblInentingUpload: "Téléverser le certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
         lblInentingTip: "Astuce: vous pouvez choisir plusieurs fichiers. En les téléversant ici, vous n'avez plus besoin de les envoyer par mail.",
         sec2: "2. Options & Cotisations",
-        palmares: "Palmarès obligatoire:",
-        palmaresVal: "7,00 EUR (1 par famille obligatoire)",
+        optieVerplichtTip: "📌 <strong>Remarque:</strong> Au moins 1 des options (Palmarès OU une Cotisation) est obligatoire par famille.",
+        lblPalmaresTekst: "<strong>Palmarès 2026</strong> (€7,00)",
         lblGroepLidgeld: "Cotisation De Pajottenlanders (2027)",
         lidgeldOpties: [
           { id: "lid_papieren", prijs: 15, label: "Cotisation 2027 avec revue papier (€15,00)" },
@@ -624,7 +631,6 @@
           { val: "Vrouw", label: "Femelle" }
         ],
         lblAantalDieren: "Nombre d'animaux inscrits",
-        lblPalmaresKosten: "Palmarès obligatoire",
         lblOptiesKosten: "Options supplémentaires",
         lblTotaalTeBetalen: "Total à payer",
         sec4: "4. Confirmation",
@@ -635,7 +641,7 @@
         modalBtnText: "Compris",
         valAlertGeenDieren: "Vous devez inscrire au moins 1 animal complet avant de soumettre.",
         valAlert: (idx) => `Veuillez remplir au moins Espèce, Race, Mâle/Femelle et Vieux/Jeune pour l'animal #${idx}.`,
-        valIbanFout: "Veuillez entrer un numéro de compte (IBAN) valide sans caractères invalides.",
+        valIbanFout: "Le numéro de compte (IBAN) entré n'est pas valide. Veuillez corriger ou laisser vide.",
         confTitel: "Inscription Envoyée avec Succès!",
         confSub: "Merci pour votre inscription. Nous avons bien reçu vos données.",
         confBankTitel: "Instructions de Paiement Importantes",
@@ -653,7 +659,6 @@
       }
     };
 
-    // Nette Custom Modal functies
     function toonModal(boodschap, callback = null) {
       const t = vertalingen[huidigeTaal];
       document.getElementById('modalTitle').textContent = t.modalTitle;
@@ -673,7 +678,6 @@
       }
     }
 
-    // Sluit modal bij klik buiten de kaart
     window.addEventListener('click', (e) => {
       const modal = document.getElementById('customModal');
       if (e.target === modal) {
@@ -681,11 +685,10 @@
       }
     });
 
-    // Bankrekening controle: IBAN formaat + modulo 97 checksum
+    // IBAN controle (modulo 97)
     function valideerIBAN(iban) {
-      if (!iban) return false;
+      if (!iban) return true; // Veld is optioneel
       const schoon = iban.replace(/[\s.-]/g, '').toUpperCase();
-      
       if (!/^[A-Z0-9]+$/.test(schoon)) return false;
 
       const ibanRegex = /^[A-Z]{2}[0-9]{2}[A-Z0-9]{10,30}$/;
@@ -696,7 +699,6 @@
           const code = hussle.charCodeAt(i);
           nummers += (code >= 65 && code <= 90) ? (code - 55) : hussle[i];
         }
-        
         let rest = 0;
         for (let i = 0; i < nummers.length; i++) {
           rest = (rest * 10 + parseInt(nummers[i], 10)) % 97;
@@ -832,8 +834,8 @@
       document.getElementById('lblInentingTip').innerHTML = t.lblInentingTip;
 
       document.getElementById('txtSectie2').innerHTML = t.sec2;
-      document.getElementById('lblPalmares').innerHTML = t.palmares;
-      document.getElementById('valPalmares').value = t.palmaresVal;
+      document.getElementById('txtOptieVerplichtTip').innerHTML = t.optieVerplichtTip;
+      document.getElementById('lblPalmaresTekst').innerHTML = t.lblPalmaresTekst;
       document.getElementById('lblGroepLidgeld').innerHTML = t.lblGroepLidgeld;
       document.getElementById('lblGroepFokker').innerHTML = t.lblGroepFokker;
 
@@ -855,7 +857,6 @@
       document.getElementById('btnCopyLastDier').innerHTML = t.btnCopyLastDier;
 
       document.getElementById('lblAantalDieren').innerHTML = t.lblAantalDieren;
-      document.getElementById('lblPalmaresKosten').innerHTML = t.lblPalmaresKosten;
       document.getElementById('lblOptiesKosten').innerHTML = t.lblOptiesKosten;
       document.getElementById('lblTotaalTeBetalen').innerHTML = t.lblTotaalTeBetalen;
 
@@ -887,7 +888,7 @@
       document.getElementById('rowAdres').innerHTML = t.adres.replace(' *', '').replace(':', '');
       document.getElementById('rowContact').innerHTML = (t.email.replace(' *', '') + " & " + t.telefoon.replace(' *', '')).replace(/:/g, '');
       document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
-      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(' *', '').replace(':', '');
+      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '').replace(' (IBAN - Optioneel)', '');
       document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(' (Optioneel):', '').replace(' (Optionnel):', '');
       document.getElementById('rowInenting').innerHTML = "Inentingsbewijs";
       document.getElementById('rowOpties').innerHTML = t.lblOptiesKosten;
@@ -1034,12 +1035,19 @@
       const kostenDieren = geteldeDieren * 5;
       
       let extraOptiesTotaal = 0;
+
+      // Palmares meerekenen indien aangevinkt
+      const cbPalmares = document.getElementById('optie_palmares');
+      if (cbPalmares && cbPalmares.checked) {
+        extraOptiesTotaal += parseFloat(cbPalmares.getAttribute('data-prijs')) || 0;
+      }
+
+      // Lidgelden & Fokkersnummers
       document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         extraOptiesTotaal += parseFloat(cb.getAttribute('data-prijs')) || 0;
       });
 
-      const palmares = 7;
-      const totaal = kostenDieren + extraOptiesTotaal + palmares;
+      const totaal = kostenDieren + extraOptiesTotaal;
 
       document.getElementById('aantalDierenTxt').textContent = geteldeDieren;
       document.getElementById('kostenDierenTxt').textContent = kostenDieren.toFixed(2).replace('.', ',');
@@ -1082,16 +1090,16 @@
       e.preventDefault();
       const t = vertalingen[huidigeTaal];
       
-      // 1. Bankrekening validatie met custom in-site modal
+      // 1. Bankrekening controle enkel als er iets ingevuld is
       const ibanInvoer = document.getElementById('bankrekening').value.trim();
-      if (!valideerIBAN(ibanInvoer)) {
+      if (ibanInvoer !== "" && !valideerIBAN(ibanInvoer)) {
         toonModal(t.valIbanFout, () => {
           document.getElementById('bankrekening').focus();
         });
         return;
       }
 
-      // 2. Dieren validatie met custom in-site modal
+      // 2. Dieren validatie
       const dieren = [];
       let validatieFout = false;
       let foutMelding = "";
@@ -1154,6 +1162,11 @@
       }
 
       const gekozenOpties = [];
+      const cbPalmares = document.getElementById('optie_palmares');
+      if (cbPalmares && cbPalmares.checked) {
+        gekozenOpties.push("Palmares 2026 (€7,00)");
+      }
+
       document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         gekozenOpties.push(cb.getAttribute('data-label'));
       });
@@ -1167,7 +1180,7 @@
       const adresVal = document.getElementById('adres').value + ", " + document.getElementById('gemeente').value;
       const contactVal = document.getElementById('email').value + " / " + document.getElementById('telefoon').value;
       const lidVanVal = document.getElementById('lid_van').value || "-";
-      const ibanSchoon = ibanInvoer.replace(/[\s.-]/g, '').toUpperCase();
+      const ibanSchoon = ibanInvoer ? ibanInvoer.replace(/[\s.-]/g, '').toUpperCase() : "-";
       const opmerkingVal = document.getElementById('opmerking').value || "-";
 
       const formData = new FormData();
