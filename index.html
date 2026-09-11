@@ -292,7 +292,7 @@
           <input type="text" id="lid_van" placeholder="Optioneel">
         </div>
         <div class="form-group">
-          <label id="lblBankrekening">Bankrekeningnummer (IBAN - Optioneel):</label>
+          <label id="lblBankrekening">Bankrekeningnummer (IBAN ):</label>
           <input type="text" id="bankrekening" placeholder="bv. BE68 5390 0754 7034 of NL91 ABNA 0417 1643 00">
         </div>
       </div>
@@ -477,7 +477,7 @@
         email: "E-mailadres: *",
         telefoon: "Telefoon / GSM: *",
         lidVan: "Lid van vereniging:",
-        bankrekening: "Bankrekeningnummer (IBAN - Optioneel):",
+        bankrekening: "Bankrekeningnummer (IBAN):",
         opmerking: "Opmerking (Optioneel):",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
         lblInentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
@@ -574,7 +574,7 @@
         email: "Adresse e-mail: *",
         telefoon: "Téléphone / GSM: *",
         lidVan: "Membre de l'association:",
-        bankrekening: "Numéro de compte (IBAN - Optionnel):",
+        bankrekening: "Numéro de compte (IBAN):",
         opmerking: "Remarque (Optionnel):",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
         lblInentingUpload: "Téléverser le certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
@@ -888,7 +888,7 @@
       document.getElementById('rowAdres').innerHTML = t.adres.replace(' *', '').replace(':', '');
       document.getElementById('rowContact').innerHTML = (t.email.replace(' *', '') + " & " + t.telefoon.replace(' *', '')).replace(/:/g, '');
       document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
-      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '').replace(' (IBAN - Optioneel)', '');
+      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '').replace(' (IBAN)', '');
       document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(' (Optioneel):', '').replace(' (Optionnel):', '');
       document.getElementById('rowInenting').innerHTML = "Inentingsbewijs";
       document.getElementById('rowOpties').innerHTML = t.lblOptiesKosten;
