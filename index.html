@@ -289,21 +289,21 @@
       <div class="grid-2">
         <div class="form-group">
           <label id="lblLidVan">Lid van vereniging:</label>
-          <input type="text" id="lid_van" placeholder="Optioneel">
+          <input type="text" id="lid_van" placeholder="">
         </div>
         <div class="form-group">
-          <label id="lblBankrekening">Bankrekeningnummer (IBAN ):</label>
+          <label id="lblBankrekening">Bankrekeningnummer (IBAN):</label>
           <input type="text" id="bankrekening" placeholder="bv. BE68 5390 0754 7034 of NL91 ABNA 0417 1643 00">
         </div>
       </div>
 
       <div class="form-group">
-        <label id="lblOpmerking">Opmerking (Optioneel):</label>
+        <label id="lblOpmerking">Opmerking:</label>
         <textarea id="opmerking" placeholder="Eventuele opmerkingen of speciale wensen..."></textarea>
       </div>
 
       <div class="form-group">
-        <label id="lblInentingUpload">Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):</label>
+        <label id="lblInentingUpload">Kopie Inentingsbewijs opladen (PDF, JPG of PNG):</label>
         <div class="upload-box">
           <input type="file" id="inentingBestand" accept="image/*,application/pdf" multiple>
           <div class="upload-tip" id="lblInentingTip">Tip: U kunt meerdere bestanden selecteren. Indien u nu oplaadt, hoeft u deze niet meer apart te mailen.</div>
@@ -314,7 +314,7 @@
 
       <h3 id="txtSectie2">2. Opties & Lidgelden</h3>
       <div class="alert-info" id="txtOptieVerplichtTip" style="margin-bottom: 15px;">
-        📌 <strong>Opmerking:</strong> Minstens 1 palmares is per gezin verplicht.
+        📌 <strong>Opmerking:</strong> Minstens 1 van de opties (Palmares óf een Lidgeld) is per gezin verplicht.
       </div>
 
       <!-- Palmares Optie (Aan/uitvinkbaar) -->
@@ -354,7 +354,7 @@
             <th style="width: 12%;" id="thKleur">Kleur</th>
             <th style="width: 10%;" id="thGeslacht">Man / Vrouw *</th>
             <th style="width: 10%;" id="thLeeftijd">Oud / Jong *</th>
-            <th style="width: 11%;" id="thRing">Ring / Tatoe</th>
+            <th style="width: 11%;" id="thRing">Ring / Tattoo</th>
             <th style="width: 10%;"><span id="thPrijs">Verkoopprijs</span><span class="th-sub" id="thPrijsSub">leeglaten indien niet te koop</span></th>
             <th style="width: 8%;" id="thAanduiding">Aanduiding</th>
             <th style="width: 115px; text-align:center;" id="thActie">Copy of schrap dier</th>
@@ -439,7 +439,7 @@
             <th style="width: 80px;" id="thConfKleur">Kleur</th>
             <th style="width: 45px; text-align: center;" id="thConfGeslacht">M/V</th>
             <th style="width: 45px; text-align: center;" id="thConfLeeftijd">O/J</th>
-            <th style="width: 75px;" id="thConfRing">Ring</th>
+            <th style="width: 75px;" id="thConfRing">Ring / Tattoo</th>
             <th style="width: 55px; text-align: right;" id="thConfPrijs">Prijs</th>
             <th id="thConfAanduiding">Aand.</th>
           </tr>
@@ -478,12 +478,12 @@
         telefoon: "Telefoon / GSM: *",
         lidVan: "Lid van vereniging:",
         bankrekening: "Bankrekeningnummer (IBAN):",
-        opmerking: "Opmerking (Optioneel):",
+        opmerking: "Opmerking:",
         opmerkingPh: "Eventuele opmerkingen of speciale wensen...",
-        lblInentingUpload: "Kopie Inentingsbewijs opladen (Optioneel - PDF, JPG of PNG):",
+        lblInentingUpload: "Kopie Inentingsbewijs opladen (PDF, JPG of PNG):",
         lblInentingTip: "Tip: U kunt meerdere bestanden selecteren. Indien u nu oplaadt, hoeft u deze niet meer apart te mailen.",
         sec2: "2. Opties & Lidgelden",
-        optieVerplichtTip: "📌 <strong>Opmerking:</strong> Minstens 1 palmares is per gezin verplicht.",
+        optieVerplichtTip: "📌 <strong>Opmerking:</strong> Minstens 1 van de opties (Palmares óf een Lidgeld) is per gezin verplicht.",
         lblPalmaresTekst: "<strong>Palmares 2026</strong> (€7,00)",
         lblGroepLidgeld: "Lidgeld De Pajottenlanders (2027)",
         lidgeldOpties: [
@@ -504,7 +504,7 @@
         thKleur: "Kleur",
         thGeslacht: "Man / Vrouw *",
         thLeeftijd: "Oud / Jong *",
-        thRing: "Ring / Tatoe",
+        thRing: "Ring / Tattoo",
         thPrijs: "Verkoopprijs",
         thPrijsSub: "leeglaten indien niet te koop",
         thAanduiding: "Aanduiding",
@@ -515,7 +515,6 @@
         btnDel: "✕",
         btnDelMobile: "✕ Wis",
         kies: "-- Kies --",
-        optioneel: "Optioneel",
         soorten: [
           { val: "Duiven", label: "Duiven" },
           { val: "Grote hoenders", label: "Grote hoenders" },
@@ -575,9 +574,9 @@
         telefoon: "Téléphone / GSM: *",
         lidVan: "Membre de l'association:",
         bankrekening: "Numéro de compte (IBAN):",
-        opmerking: "Remarque (Optionnel):",
+        opmerking: "Remarque:",
         opmerkingPh: "Remarques éventuelles ou souhaits particuliers...",
-        lblInentingUpload: "Téléverser le certificat de vaccination (Optionnel - PDF, JPG ou PNG):",
+        lblInentingUpload: "Téléverser le certificat de vaccination (PDF, JPG ou PNG):",
         lblInentingTip: "Astuce: vous pouvez choisir plusieurs fichiers. En les téléversant ici, vous n'avez plus besoin de les envoyer par mail.",
         sec2: "2. Options & Cotisations",
         optieVerplichtTip: "📌 <strong>Remarque:</strong> Au moins 1 des options (Palmarès OU une Cotisation) est obligatoire par famille.",
@@ -601,7 +600,7 @@
         thKleur: "Couleur",
         thGeslacht: "Mâle / Femelle *",
         thLeeftijd: "Vieux / Jeune *",
-        thRing: "Bague / Tatouage",
+        thRing: "Bague / Tattoo",
         thPrijs: "Prix de vente",
         thPrijsSub: "laisser vide si non à vendre",
         thAanduiding: "Remarque",
@@ -612,7 +611,6 @@
         btnDel: "✕",
         btnDelMobile: "✕ Suppr.",
         kies: "-- Choisir --",
-        optioneel: "Optionnel",
         soorten: [
           { val: "Duiven", label: "Pigeons" },
           { val: "Grote hoenders", label: "Grandes volailles" },
@@ -685,9 +683,8 @@
       }
     });
 
-    // IBAN controle (modulo 97)
     function valideerIBAN(iban) {
-      if (!iban) return true; // Veld is optioneel
+      if (!iban) return true;
       const schoon = iban.replace(/[\s.-]/g, '').toUpperCase();
       if (!/^[A-Z0-9]+$/.test(schoon)) return false;
 
@@ -826,7 +823,6 @@
       document.getElementById('lblEmail').innerHTML = t.email;
       document.getElementById('lblTelefoon').innerHTML = t.telefoon;
       document.getElementById('lblLidVan').innerHTML = t.lidVan;
-      document.getElementById('lid_van').placeholder = t.optioneel;
       document.getElementById('lblBankrekening').innerHTML = t.bankrekening;
       document.getElementById('lblOpmerking').innerHTML = t.opmerking;
       document.getElementById('opmerking').placeholder = t.opmerkingPh;
@@ -888,8 +884,8 @@
       document.getElementById('rowAdres').innerHTML = t.adres.replace(' *', '').replace(':', '');
       document.getElementById('rowContact').innerHTML = (t.email.replace(' *', '') + " & " + t.telefoon.replace(' *', '')).replace(/:/g, '');
       document.getElementById('rowLidVan').innerHTML = t.lidVan.replace(':', '');
-      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '').replace(' (IBAN)', '');
-      document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(' (Optioneel):', '').replace(' (Optionnel):', '');
+      document.getElementById('rowIban').innerHTML = t.bankrekening.replace(':', '');
+      document.getElementById('rowOpmerking').innerHTML = t.opmerking.replace(':', '');
       document.getElementById('rowInenting').innerHTML = "Inentingsbewijs";
       document.getElementById('rowOpties').innerHTML = t.lblOptiesKosten;
 
@@ -898,7 +894,7 @@
       document.getElementById('thConfKleur').innerHTML = t.thKleur;
       document.getElementById('thConfGeslacht').innerHTML = "M/V";
       document.getElementById('thConfLeeftijd').innerHTML = "O/J";
-      document.getElementById('thConfRing').innerHTML = "Ring";
+      document.getElementById('thConfRing').innerHTML = t.thRing;
       document.getElementById('thConfPrijs').innerHTML = "Prijs";
       document.getElementById('thConfAanduiding').innerHTML = "Aand.";
 
@@ -930,10 +926,10 @@
       selectLeeftijd.innerHTML = `<option value="">${t.kies}</option>` + 
         t.leeftijden.map(l => `<option value="${l.val}" ${l.val === gekozenLeeftijd ? 'selected' : ''}>${l.label}</option>`).join('');
 
-      row.querySelector('.dier-kleur').placeholder = t.optioneel;
-      row.querySelector('.dier-ring').placeholder = t.optioneel;
-      row.querySelector('.dier-prijs').placeholder = t.optioneel;
-      row.querySelector('.dier-aanduiding').placeholder = t.optioneel;
+      row.querySelector('.dier-kleur').placeholder = "";
+      row.querySelector('.dier-ring').placeholder = "";
+      row.querySelector('.dier-prijs').placeholder = "";
+      row.querySelector('.dier-aanduiding').placeholder = "";
       
       const btnCopy = row.querySelector('.btn-copy');
       const btnDel = row.querySelector('.btn-del');
@@ -953,12 +949,12 @@
         <td class="row-num" data-label="#"></td>
         <td data-label="${t.thSoort}"><select class="dier-soort" onchange="berekenTotaal()"></select></td>
         <td data-label="${t.thRas}"><input type="text" class="dier-ras" placeholder="Ras / Race" oninput="berekenTotaal()"></td>
-        <td data-label="${t.thKleur}"><input type="text" class="dier-kleur" placeholder="${t.optioneel}"></td>
+        <td data-label="${t.thKleur}"><input type="text" class="dier-kleur"></td>
         <td data-label="${t.thGeslacht}"><select class="dier-geslacht"></select></td>
         <td data-label="${t.thLeeftijd}"><select class="dier-leeftijd"></select></td>
-        <td data-label="${t.thRing}"><input type="text" class="dier-ring" placeholder="${t.optioneel}"></td>
-        <td data-label="${t.thPrijs}"><input type="text" class="dier-prijs" placeholder="${t.optioneel}"></td>
-        <td data-label="${t.thAanduiding}"><input type="text" class="dier-aanduiding" placeholder="${t.optioneel}"></td>
+        <td data-label="${t.thRing}"><input type="text" class="dier-ring"></td>
+        <td data-label="${t.thPrijs}"><input type="text" class="dier-prijs"></td>
+        <td data-label="${t.thAanduiding}"><input type="text" class="dier-aanduiding"></td>
         <td class="btn-action-container">
           <div class="action-btns">
             <button type="button" class="btn-action btn-copy" title="Kopieer dier" onclick="dupliceerRij(this)">${window.innerWidth <= 768 ? t.btnCopyMobile : copySvgIcon}</button>
@@ -1036,13 +1032,11 @@
       
       let extraOptiesTotaal = 0;
 
-      // Palmares meerekenen indien aangevinkt
       const cbPalmares = document.getElementById('optie_palmares');
       if (cbPalmares && cbPalmares.checked) {
         extraOptiesTotaal += parseFloat(cbPalmares.getAttribute('data-prijs')) || 0;
       }
 
-      // Lidgelden & Fokkersnummers
       document.querySelectorAll('#containerLidgeld input:checked, #containerFokkersnummer input:checked').forEach(cb => {
         extraOptiesTotaal += parseFloat(cb.getAttribute('data-prijs')) || 0;
       });
@@ -1090,7 +1084,7 @@
       e.preventDefault();
       const t = vertalingen[huidigeTaal];
       
-      // 1. Bankrekening controle enkel als er iets ingevuld is
+      // 1. Bankrekening controle
       const ibanInvoer = document.getElementById('bankrekening').value.trim();
       if (ibanInvoer !== "" && !valideerIBAN(ibanInvoer)) {
         toonModal(t.valIbanFout, () => {
@@ -1141,7 +1135,6 @@
       spinner.style.display = 'inline-block';
       btnText.textContent = t.btnSending;
 
-      // Meerdere bestanden inlezen
       const fileInput = document.getElementById('inentingBestand');
       const filesArray = [];
 
